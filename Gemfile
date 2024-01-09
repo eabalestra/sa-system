@@ -44,11 +44,11 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem "jquery-rails"
-gem "bootstrap"
-gem "sassc-rails"
+gem 'jquery-rails'
 gem 'font_awesome5_rails'
 gem 'devise'
+gem 'dartsass-sprockets'
+gem 'bootstrap', '~> 5.3.2'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

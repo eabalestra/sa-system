@@ -101,6 +101,12 @@ GEM
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
+    dartsass-sprockets (3.1.0)
+      railties (>= 4.0.0)
+      sassc-embedded (~> 1.69)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     date (3.3.4)
     debug (1.9.1)
       irb (~> 1.10)
@@ -115,12 +121,12 @@ GEM
       ruby2_keywords
     erubi (1.12.0)
     execjs (2.9.1)
-    ffi (1.16.3)
     font_awesome5_rails (1.5.0)
       nokogiri (>= 1.11.3)
       railties (>= 4.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-protobuf (3.25.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -235,14 +241,20 @@ GEM
     rexml (3.2.6)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
+    sass-embedded (1.69.7-aarch64-linux-gnu)
+      google-protobuf (~> 3.25)
+    sass-embedded (1.69.7-arm-linux-gnueabihf)
+      google-protobuf (~> 3.25)
+    sass-embedded (1.69.7-arm64-darwin)
+      google-protobuf (~> 3.25)
+    sass-embedded (1.69.7-x86-linux-gnu)
+      google-protobuf (~> 3.25)
+    sass-embedded (1.69.7-x86_64-darwin)
+      google-protobuf (~> 3.25)
+    sass-embedded (1.69.7-x86_64-linux-gnu)
+      google-protobuf (~> 3.25)
+    sassc-embedded (1.69.1)
+      sass-embedded (~> 1.69)
     selenium-webdriver (4.16.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -298,8 +310,9 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
-  bootstrap
+  bootstrap (~> 5.3.2)
   capybara
+  dartsass-sprockets
   debug
   devise
   font_awesome5_rails
@@ -309,7 +322,6 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.1.2)
   redis (>= 4.0.1)
-  sassc-rails
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)

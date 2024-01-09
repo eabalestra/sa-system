@@ -2,12 +2,13 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-import "jquery"
-import "jquery_ujs"
-import "popper"
-import "bootstrap"
+import "jquery";
+import "jquery_ujs";
 
-import './sb-admin-2.js'
+import "popper";
+import "bootstrap";
+
+import './sb-admin-2.js';
 
 jQuery(document).ready(function(){
   console.log("inside onload action...");
