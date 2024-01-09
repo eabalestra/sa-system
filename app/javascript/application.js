@@ -9,11 +9,6 @@ import "bootstrap"
 
 import './sb-admin-2.js'
 
-console.log("Hello word");
 jQuery(document).ready(function(){
   console.log("inside onload action...");
 })
-
-// jQuery( function() {
-//   jQuery( "#dialog" ).dialog();
-// } );

@@ -1,4 +1,11 @@
 $('#modalClientes').modal('toggle');
 $('#tablaClientes').append(
-    '<tr id="cliente_<%= @cliente.id %>" ><td><%= @cliente.name %></td><td><%= @cliente.dir %></td><td><%= @cliente.phone %></td><td><%= link_to 'Editar', edit_client_path(@cliente), html_options = {class: "btn btn-info btn-xs", remote: true} %> <%= link_to "Borrar", @cliente, remote: true, method: :delete, data: { confirm: "¿Borrar cliente: #{@cliente.name}?"}, class: "btn btn-danger btn-xs" %></td></tr>'
+'
+<tr id="cliente_<%= @client.id %>" >
+  <td><%= @client.name %></td>
+  <td><%= @client.dir %></td>
+  <td><%= @client.phone %></td>
+  <td><%= link_to "Editar", edit_client_path(@client), html_options = {class: "btn btn-info btn-sm", remote: true} %> <%= link_to "Borrar", @client, remote: true, method: :delete, data: { confirm: "¿Borrar cliente: #{@client.name}?"}, class: "btn btn-danger btn-sm" %></td>
+</tr>
+'
 );

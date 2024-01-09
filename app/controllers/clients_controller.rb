@@ -2,22 +2,22 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:edit, :update, :destroy]
 
   def index
-    @clientes = Client.all
+    @clients = Client.all
   end
 
   def new
-    @cliente = Client.new
+    @client = Client.new
   end
 
   def create
-    @cliente = Client.new(client_params)
+    @client = Client.new(client_params)
 
     respond_to do |format|
-      if @cliente.save
+      if @client.save
         format.json { head :no_content }
         format.js
       else
-        format.json { render json: @cliente.errors.full_messages, status: :unprocessable_entity }
+        format.json { render json: @client.errors.full_messages, status: :unprocessable_entity }
         format.js { render :new }
       end
     end
@@ -28,18 +28,18 @@ class ClientsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @cliente.update(client_params)
+      if @client.update(client_params)
         format.json { head :no_content }
         format.js
       else
-        format.json { render json: @cliente.error.full_messages, status: :unprocessable_entity }
+        format.json { render json: @client.error.full_messages, status: :unprocessable_entity }
         format.js { render :edit }
       end
     end
   end
 
   def destroy
-    @cliente.destroy
+    @client.destroy
     respond_to do |format|
       format.js
       format.json { head :no_content }
@@ -48,7 +48,7 @@ class ClientsController < ApplicationController
 
   private
   def set_client
-    @cliente = Client.find(params[:id])
+    @client = Client.find(params[:id])
   end
 
   def client_params
