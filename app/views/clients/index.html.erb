@@ -32,8 +32,8 @@
             <td><%= clie.phone %></td>
             <td>
               <!-- prettier-ignore -->
-              <%= link_to "Editar", edit_client_path(clie), html_options = {class: "btn btn-info btn-sm", remote: true} %>
-              <%= link_to "Borrar", clie, remote: true, method: :delete, data: { confirm: "¿Borrar cliente: #{clie.name}?"}, class: "btn btn-danger btn-sm" %>
+              <%= link_to "Editar", edit_client_path(clie), html_options = {class: "btn btn-info btn-xs", remote: true} %>
+              <%= link_to "Borrar", clie, remote: true, method: :delete, data: { confirm: "¿Borrar cliente: #{clie.name}?"}, class: "btn btn-danger btn-xs" %>
             </td>
           </tr>
           <% end %>

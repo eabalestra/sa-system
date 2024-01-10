@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
-  resources :clients
+  resources :clients, except: %i[show]
+  resources :suppliers, except: %i[show]
 end
