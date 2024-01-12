@@ -1,6 +1,6 @@
 <% new_row = capture do %>
   <tr id="producto_<%= @product.id %>" >
-    <td><%= image_tag(@product.image_product.url, size: "50x50", class: "rounded-circle") if @product.image_product? %></td>
+    <td><%= image_tag(@product.image_product, size: "50x50", class: "rounded-circle") if @product.image_product? %></td>
     <td><%= @product.cod %></td>
     <td><%= @product.name %></td>
     <td><%= @product.existence %></td>
