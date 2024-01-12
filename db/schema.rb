@@ -30,8 +30,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_135626) do
     t.date "last_stock_update_date"
     t.decimal "unit_cost"
     t.decimal "selling_unit_price"
+    t.string "image_product"
+    t.integer "supplier_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -57,4 +60,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_135626) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "products", "suppliers"
 end

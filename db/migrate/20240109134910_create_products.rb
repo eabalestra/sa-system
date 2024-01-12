@@ -9,6 +9,8 @@ class CreateProducts < ActiveRecord::Migration[7.1]
       t.date :last_stock_update_date
       t.decimal :unit_cost
       t.decimal :selling_unit_price
+      t.string :image_product
+      t.references :supplier, foreign_key: true
 
       t.timestamps
     end

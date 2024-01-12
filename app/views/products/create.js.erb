@@ -1,0 +1,16 @@
+<% new_row = capture do %>
+  <tr id="producto_<%= @product.id %>" >
+    <td><%= image_tag(@product.image_product.url, size: "50x50", class: "rounded-circle") if @product.image_product? %></td>
+    <td><%= @product.cod %></td>
+    <td><%= @product.name %></td>
+    <td><%= @product.existence %></td>
+    <<td>$ <%= @product.selling_unit_price %></td>
+    <<td>$ <%= @product.unit_cost %></td>
+    <td><%= @product.supplier != nil ? @product.supplier.name : "No tiene proveedor" %></td>
+    <td><%= @product.last_price_update_date %></td>
+    <td><%= @product.last_stock_update_date %></td>
+    <td><%= link_to 'Editar', edit_product_path(@product), html_options = {class: "btn btn-info btn-xs", remote: true} %> <%= link_to "Borrar", @product, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{@product.name}?"}, class: "btn btn-danger btn-xs" %></td>
+  </tr>
+<% end %>
+$('#modalProductos').modal('toggle');
+$('#tablaProductos').append('<%= j new_row %>');
