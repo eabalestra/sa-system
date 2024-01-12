@@ -49,11 +49,11 @@ gem 'font_awesome5_rails'
 gem 'devise'
 gem 'dartsass-sprockets'
 gem 'bootstrap', '~> 5.3.2'
+gem 'aws-sdk-s3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
-  gem 'erb-formatter'
 end
 
 group :development do
@@ -65,6 +65,7 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'erb-formatter'
 end
 
 group :test do

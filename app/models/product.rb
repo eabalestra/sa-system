@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   # Associations
   belongs_to :supplier
+  has_one_attached :image_product
 
   # Validations
   before_create :set_last_update_dates
