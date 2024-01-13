@@ -1,0 +1,11 @@
+$('#modalClientes').modal('toggle');
+$('#cliente_<%= @client.id %>').replaceWith(
+`
+<tr id="cliente_<%= @client.id %>" >
+  <td><%= @client.name %></td>
+  <td><%= @client.dir %></td>
+  <td><%= @client.phone %></td>
+  <td><%= link_to "Editar", edit_client_path(@client), html_options = {class: "btn btn-info btn-xs", remote: true} %> <%= link_to "Borrar", @client, remote: true, method: :delete, data: { confirm: "¿Borrar cliente: #{@client.name}?"}, class: "btn btn-danger btn-xs" %></td>
+</tr>
+`
+);

@@ -1,0 +1,10 @@
+<% new_row = capture do %>
+  <tr id="proveedor_<%= @proveedor.id %>" >
+    <td><%= @proveedor.name %></td>
+    <td><%= @proveedor.dir %></td>
+    <td><%= @proveedor.phone %></td>
+    <td><%= link_to 'Editar', edit_supplier_path(@proveedor), html_options = {class: "btn btn-info btn-xs", remote: true} %> <%= link_to "Borrar", @proveedor, remote: true, method: :delete, data: { confirm: "¿Borrar categoria: #{@proveedor.name}?"}, class: "btn btn-danger btn-xs" %></td>
+  </tr>
+<% end %>
+$('#modalProveedores').modal('toggle');
+$('#tablaProveedores').append('<%= j new_row %>');

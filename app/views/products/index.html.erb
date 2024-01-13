@@ -1,0 +1,48 @@
+<h1 class="h3 mb-2 text-gray-800">Productos</h1>
+<div>
+  <%= link_to new_product_path, { remote: true, class: "btn btn-info" }  do %>
+    <span class="fas fa-plus-square" ></span>
+  <% end %>
+</div>
+<br />
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="tablaProductos" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Código</th>
+            <th>Nombre producto</th>
+            <th>Existencia</th>
+            <th>PU Venta</th>
+            <th>PU Compra</th>
+            <th>Proveedor</th>
+            <th>Últ. Actualización Precio</th>
+            <th>Últ. Actualización Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.each do |prod| %>
+            <tr id="producto_<%= prod.id %>" >
+              <td><%= image_tag prod.image_product, size: "50x50", class: "rounded-circle" if prod.image_product? %></td>
+              <td><%= prod.cod %></td>
+              <td><%= prod.name %></td>
+              <td><%= prod.existence %></td>
+              <td>$<%= prod.selling_unit_price %></td>
+              <td>$<%= prod.unit_cost %></td>
+              <td><%= prod.supplier != nil ? prod.supplier.name : "No tiene proveedor" %></td>
+              <td><%= prod.last_price_update_date %></td>
+              <td><%= prod.last_stock_update_date %></td>
+              <td>
+                <%= link_to "Editar", edit_product_path(prod), html_options = {class: "btn btn-info btn-xs", remote: true} %>
+                <%= link_to "Borrar", prod, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{prod.name}?"}, class: "btn btn-danger btn-xs" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%= render 'modal_productos' %>
