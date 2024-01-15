@@ -15,7 +15,7 @@
   <div class="item form-group<%= @product.errors[:cod].any? ? ' has-error has-feedback' : '' %>">
     <%= f.label :cod, "Codigo del producto: " %>
     <div class="input-group">
-      <%= f.number_field :cod, {class: "form-control", :placeholder=>"Introduzca el codigo del producto..."} %>
+      <%= f.text_field :cod, {class: "form-control", :placeholder=>"Introduzca el codigo del producto..."} %>
       <%if @product.errors[:cod].any? %>
         <p class="bg-danger"><%= @product.errors[:cod].to_s[/\w([^"]*)/] %></p>
       <% end %>
