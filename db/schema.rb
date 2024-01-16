@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_12_203702) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_15_232202) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -65,6 +65,27 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_12_203702) do
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
+  create_table "sale_details", force: :cascade do |t|
+    t.integer "quantity"
+    t.integer "product_id", null: false
+    t.integer "sale_id", null: false
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_sale_details_on_product_id"
+    t.index ["sale_id"], name: "index_sale_details_on_sale_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.decimal "total_amount"
+    t.integer "user_id", null: false
+    t.integer "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_sales_on_client_id"
+    t.index ["user_id"], name: "index_sales_on_user_id"
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string "name"
     t.string "phone"
@@ -91,4 +112,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_12_203702) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "products", "suppliers"
+  add_foreign_key "sale_details", "products"
+  add_foreign_key "sale_details", "sales"
+  add_foreign_key "sales", "clients"
+  add_foreign_key "sales", "users"
 end

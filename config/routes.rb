@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :clients, except: %i[show]
   resources :suppliers, except: %i[show]
   resources :products, except: %i[show]
+  resources :sales, except: %i[show, update]
 end

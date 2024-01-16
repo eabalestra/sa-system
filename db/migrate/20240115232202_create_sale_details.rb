@@ -5,7 +5,6 @@ class CreateSaleDetails < ActiveRecord::Migration[7.1]
       t.references :product, null: false, foreign_key: true
       t.references :sale, null: false, foreign_key: true
       t.date :date
-      t.references :client, null: false, foreign_key: true
 
       t.timestamps
     end
