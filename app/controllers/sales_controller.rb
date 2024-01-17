@@ -14,7 +14,7 @@ class SalesController < ApplicationController
   end
 
   def edit
-    @productos_venta = @sale.sale_details
+    @sale_products = @sale.sale_details
   end
 
   def destroy

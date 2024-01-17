@@ -78,8 +78,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_15_232202) do
 
   create_table "sales", force: :cascade do |t|
     t.decimal "total_amount"
-    t.integer "user_id", null: false
-    t.integer "client_id", null: false
+    t.integer "user_id"
+    t.integer "client_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_sales_on_client_id"

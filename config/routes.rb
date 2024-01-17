@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   resources :suppliers, except: %i[show]
   resources :products, except: %i[show]
   resources :sales, except: %i[show, update]
+
+  get 'product_finder/:term', to: 'products#finder'
 end
