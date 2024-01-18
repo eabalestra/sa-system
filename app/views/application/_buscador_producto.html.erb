@@ -9,11 +9,11 @@
       </div>
       <div class="modal-body-items modal-body" id="modal-body-items">
         <div class="form-group">
-          <label for="buscador">Ingresa el nombre del producto</label>
-          <input type="text" class="form-control" data-tipo = "<%= @tipo %>" data-model = "<%= @model.try(:id) %>" id="buscador_productos" placeholder="Nombre producto...">
+          <label for="buscador_productos">Ingresa el nombre del producto</label>
+          <input type="text" class="form-control" data-tipo = "<%= tipo %>" data-model = "<%= @model.try(:id) %>" id="buscador_productos" placeholder="Nombre producto...">
         </div>
         <div class="form-group">
-          <label for="buscador">Ingresa una cantidad</label>
+          <label for="cantidad_producto">Ingresa una cantidad</label>
           <input type="number" class="form-control" id="cantidad_producto" placeholder="Ingresa la cantidad a vender..." value="1">
         </div>
         <table class="table table-dark" id="tabla_buscador" >

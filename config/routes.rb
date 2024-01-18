@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   resources :sales, except: %i[show, update]
 
   get 'product_finder/:term', to: 'products#finder'
+  post '/add_item_sale', to: 'sales#add_item'
 end

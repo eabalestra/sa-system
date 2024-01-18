@@ -37,7 +37,7 @@
         </thead>
         <tbody>
           <% if @sale_products.empty? %>
-            <tr>
+            <tr id="no-product-row">
               <td> No hay productos en la venta </td>
               <td></td>
               <td></td>
@@ -58,5 +58,5 @@
   </div>
 </div>
 <% @model = @sale %>
-<%= render 'buscador_producto', model: @model, tipo: 'sales' %>
+<%= render 'buscador_producto', model: @model, tipo: "sales" %>
 <%= render 'buscador_cliente' , venta: @sale %>

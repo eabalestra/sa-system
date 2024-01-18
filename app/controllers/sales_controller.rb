@@ -1,10 +1,12 @@
 class SalesController < ApplicationController
   before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_cliente]
 
+  # GET /sales
   def index
     @sales = Sale.all
   end
 
+  # GET /sales/new
   def new
     @sale = current_user.sales.create(total_amount: 0.0)
     redirect_to edit_sale_path(@sale)
@@ -13,10 +15,12 @@ class SalesController < ApplicationController
   def show
   end
 
+  # GET /sales/:id/edit
   def edit
     @sale_products = @sale.sale_details
   end
 
+  # DELETE /sales/:id
   def destroy
     ActiveRecord::Base.transaction do
       @sale.sale_details.map do |detail|
@@ -34,34 +38,35 @@ class SalesController < ApplicationController
     end
   end
 
+  # POST /add_item_sale
   def add_item
-    producto = Product.find(params[:producto_id])
-    cantidad = params[:quantity].nil? ? 1 : params[:quantity].to_i
+    product = Product.find(params[:product_id])
+    quantity = params[:quantity].nil? ? 1 : params[:quantity].to_i
 
-    importe_producto = producto.selling_unit_price * cantidad
+    product_amount = product.selling_unit_price * quantity
 
-    @sale_detail = @sale.sale_details.build(product: producto, quantity: cantidad)
+    @sale_detail = @sale.sale_details.build(product: product, quantity: quantity)
 
-    importe_antes_de_registro = @sale.total_amount
-    importe_despues_registro = importe_antes_de_registro + importe_producto
+    amount_before_registration = @sale.total_amount
+    amount_after_registration = amount_before_registration + product_amount
 
-    @sale.total_amount = importe_despues_registro
+    @sale.total_amount = amount_after_registration
 
-    existencia_antes_venta = producto.existence
+    existence_before_sale = product.existence
 
     result = {
-      product_id:      @sale_detail.product_id,
-      precio_producto: producto.selling_unit_price.to_f,
-      nombre_prod:     @sale_detail.product.try(:name),
-      cantidad:        @sale_detail.quantity,
-      importe_item:    producto.precio * cantidad,
-      importe_venta:   importe_despues_registro
+      product_id:       @sale_detail.product_id,
+      price:            product.selling_unit_price.to_f,
+      name:             @sale_detail.product.try(:name),
+      quantity:         @sale_detail.quantity,
+      amount_item:      product.selling_unit_price * quantity,
+      amount_sale:      amount_after_registration
     }
 
-    producto.existence  = existencia_antes_venta - cantidad
+    product.existence  = existence_before_sale - quantity
 
     respond_to do |format|
-      if @sale.save && producto.save
+      if @sale.save && product.save
         format.json { render json: result }
       else
         format.json { render json: @sale.errors.full_messages, status: :unprocessable_entity }
@@ -69,6 +74,7 @@ class SalesController < ApplicationController
     end
   end
 
+  # POST /sales/add_cliente
   def add_cliente
     cliente = Client.find(params[:cliente_id])
     if cliente.present?
