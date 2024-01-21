@@ -16,4 +16,10 @@ Rails.application.routes.draw do
 
   get 'product_finder/:term', to: 'products#finder'
   post '/add_item_sale', to: 'sales#add_item'
+
+  resources :sales do
+    member do
+      get :receipt
+    end
+  end
 end

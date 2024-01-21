@@ -95,6 +95,14 @@ class SalesController < ApplicationController
     end
   end
 
+  # GET /sales/:id/receipt
+  def receipt
+    sale = Sale.find(params[:id])
+    xlsx = Sale.generate_doc(sale)
+
+    send_data xlsx, filename: "comprobante-de-venta-#{sale.id}-descartables-sa.xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', disposition: 'attachment'
+  end
+
   private
 
   def set_sale

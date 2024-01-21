@@ -33,6 +33,7 @@
                 <td> <%= venta.total_amount %> </td>
                 <td>
                   <%= link_to 'Detalles', sale_path(venta), {class: "btn btn-info btn-xs", remote: true} %>
+                  <%= link_to 'Descargar comprobante', receipt_sale_path(venta), { class: "btn btn-info btn-xs" } %>
                   <%= link_to 'Borrar', venta, method: :delete, data: { confirm: 'Eliminar la venta?' }, class: "btn btn-danger btn-xs" %>
                 </td>
               </tr>
