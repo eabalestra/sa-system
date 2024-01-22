@@ -47,6 +47,19 @@ class ProductsController < ApplicationController
     end
   end
 
+  def finder
+    @resultados = Product.finder(params[:term]).map do |product|
+      {
+        id: product.id,
+        name: product.name,
+        existence: product.existence,
+      }
+    end
+    respond_to do |format|
+      format.json { render :json => @resultados }
+    end
+  end
+
   private
   def product_params
     params.require(:product).permit(:image_product, :cod, :name, :description, :existence, :unit_cost, :selling_unit_price, :supplier_id)
