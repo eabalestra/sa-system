@@ -1,0 +1,7 @@
+linters:
+  FinalNewline:
+    enabled: true
+  RightTrim:
+    enabled: true
+  SelfClosingTag:
+    enabled: true
