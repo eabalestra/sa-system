@@ -13,14 +13,15 @@ Rails.application.routes.draw do
   resources :clients, except: %i[show]
   resources :suppliers, except: %i[show]
   resources :products, except: %i[show]
-  resources :sales, except: %i[show, update]
-
-  get 'product_finder/:term', to: 'products#finder'
-  post '/add_item_sale', to: 'sales#add_item'
-
-  resources :sales do
+  resources :sales, except: %i[show, update] do
     member do
       get :receipt
     end
   end
+
+  get 'product_finder/:term', to: 'products#finder'
+  post '/add_item_sale', to: 'sales#add_item'
+
+  get 'client_finder/:term', to: 'clients#finder'
+  post '/add_client_sale', to: 'sales#add_client'
 end

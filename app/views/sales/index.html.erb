@@ -29,11 +29,14 @@
               <tr>
                 <td> <%= venta.id %> </td>
                 <td> <%= venta.user.email %> </td>
-                <td> <%= venta.try(:client).try(:nombre) %> </td>
+                <td> <%= venta.try(:client).try(:name) %> </td>
                 <td> <%= venta.total_amount %> </td>
                 <td>
                   <%= link_to 'Detalles', sale_path(venta), {class: "btn btn-info btn-xs", remote: true} %>
-                  <%= link_to 'Descargar comprobante', receipt_sale_path(venta), { class: "btn btn-info btn-xs" } %>
+                  <%= link_to receipt_sale_path(venta), class: "btn btn-success" do %>
+                    <span class="fa fa-download"> </span>
+                    Descargar comprobante
+                  <% end %>
                   <%= link_to 'Borrar', venta, method: :delete, data: { confirm: 'Eliminar la venta?' }, class: "btn btn-danger btn-xs" %>
                 </td>
               </tr>
@@ -41,6 +44,7 @@
           <% end %>
         </tbody>
       </table>
+      <%= will_paginate @sales %>
     </div>
   </div>
 </div>

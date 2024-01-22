@@ -1,9 +1,10 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_cliente]
+  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client]
 
   # GET /sales
   def index
     @sales = Sale.all
+    @sales = Sale.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
   end
 
   # GET /sales/new
@@ -74,13 +75,14 @@ class SalesController < ApplicationController
     end
   end
 
-  # POST /sales/add_cliente
-  def add_cliente
-    cliente = Client.find(params[:cliente_id])
-    if cliente.present?
-      @sale.client = cliente
+  # POST /sales/add_client
+  def add_client
+    client = Client.find(params[:client_id])
+
+    if client.present?
+      @sale.client = client
       if @sale.valid?
-        result = { nombre_cliente: @sale.client.try(:name) }
+        result = { name: @sale.client.try(:name) }
 
         respond_to do |format|
           if @sale.save

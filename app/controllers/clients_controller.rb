@@ -46,6 +46,19 @@ class ClientsController < ApplicationController
     end
   end
 
+  def finder
+    @results = Client.finder(params[:term]).map do |client|
+      {
+          id: client.id,
+          name: client.name,
+      }
+    end
+
+    respond_to do |format|
+      format.json { render :json => @results }
+    end
+  end
+
   private
   def set_client
     @client = Client.find(params[:id])

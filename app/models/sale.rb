@@ -14,9 +14,11 @@ class Sale < ApplicationRecord
     worksheet = workbook.worksheets[0]
 
     # Client data
-    # worksheet[10][1].change_contents("#{sale.client.name}")
-    # Receipt number
-    # worksheet[2][6].change_contents("#{sale.receipt_number}")
+    if sale.client.nil?
+      worksheet[10][1].change_contents("Consumidor final")
+    else
+      worksheet[10][1].change_contents("#{sale.client.name}")
+    end
     # ID of the sale
     worksheet[6][6].change_contents("#{sale.id}")
     # Date of the sale
