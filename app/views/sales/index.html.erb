@@ -1,0 +1,65 @@
+<div class="d-flex flex-column flex-md-row justify-content-start">
+  <%= link_to new_sale_path, {class: "btn btn-info mb-2 mb-md-0 mr-md-2", id: "crear-venta-btn"}  do %>
+    <span class="fas fa-plus-square"> </span>
+    Realizar venta
+  <%end%>
+  <button type="button" class="btn btn-info mb-2 mb-md-0 mr-md-2" data-toggle="modal" data-target="#saleSearchModal">
+    <span class="fa fa-search"> </span>
+    Buscar venta
+  </button>
+  <% if params[:id] %>
+    <%= link_to sales_path, { type:"button", class: 'btn btn-secondary mb-2 mb-md-0 mr-md-2' } do %>
+      <span class="fa fa-arrow-left"></span>
+      Volver atrás
+    <% end %>
+  <% end %>
+</div>
+<br />
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="tabla_ventas" width="60%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Vendedor</th>
+            <th>Cliente</th>
+            <th>Importe</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @sales.empty? %>
+            <tr>
+              <td> No hay ventas </td>
+              <td></td>
+              <td></td>
+            </tr>
+          <% else %>
+            <% @sales.each do |venta| %>
+              <tr>
+                <td> <%= venta.id %> </td>
+                <td> <%= venta.user.email %> </td>
+                <td> <%= venta.try(:client).try(:name) %> </td>
+                <td> <%= venta.total_amount %> </td>
+                <td>
+                  <div class="d-flex flex-column flex-md-row justify-content-start">
+                    <%= link_to 'Detalles', sale_path(venta), {class: "btn btn-info btn-xs mb-2 mb-md-0 mr-md-2", remote: true} %>
+                    <%= link_to receipt_sale_path(venta), class: "btn btn-success mb-2 mb-md-0 mr-md-2" do %>
+                      <span class="fa fa-download"> </span>
+                      Comprobante
+                    <% end %>
+                    <%= link_to 'Borrar', venta, method: :delete, data: { confirm: 'Eliminar la venta?' }, class: "btn btn-danger btn-xs mb-2 mb-md-0 mr-md-2" %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @sales %>
+    </div>
+  </div>
+</div>
+<%= render 'modal_sales' %>
+<%= render 'modal_sale_search' %>

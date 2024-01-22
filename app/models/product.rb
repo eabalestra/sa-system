@@ -12,4 +12,8 @@ class Product < ApplicationRecord
     self.last_price_update_date = Date.today
     self.last_stock_update_date = Date.today
   end
+
+  def self.finder(term)
+    Product.where('name LIKE ?', "%#{term}%")
+  end
 end
