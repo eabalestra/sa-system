@@ -3,8 +3,11 @@ class SalesController < ApplicationController
 
   # GET /sales
   def index
-    @sales = Sale.all
-    @sales = Sale.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+    if params[:id]
+      @sales = Sale.where(id: params[:id]).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+    else
+      @sales = Sale.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+    end
   end
 
   # GET /sales/new
