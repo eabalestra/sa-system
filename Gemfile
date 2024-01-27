@@ -71,7 +71,7 @@ group :development do
   # gem "spring"
 
   # ERB Formatter
-  gem 'erb_lint', require: false
+  # gem 'erb_lint', require: false
   gem 'htmlbeautifier'
 end
 
