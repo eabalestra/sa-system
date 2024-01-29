@@ -1,35 +1,40 @@
-<table class="table table-bordered" id="tabla-productos" width="100%" cellspacing="0">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Código</th>
-      <th>Nombre producto</th>
-      <th>Existencia</th>
-      <th>PU Venta</th>
-      <th>PU Compra</th>
-      <th>Proveedor</th>
-      <th>Últ. Actualización Precio</th>
-      <th>Últ. Actualización Stock</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each do |prod| %>
-      <tr id="producto_<%= prod.id %>" >
-        <td><%= image_tag prod.image_product, size: "50x50", class: "rounded-circle" if prod.image_product? %></td>
-        <td><%= prod.cod %></td>
-        <td><%= prod.name %></td>
-        <td><%= prod.existence %></td>
-        <td>$<%= prod.selling_unit_price %></td>
-        <td>$<%= prod.unit_cost %></td>
-        <td><%= prod.supplier != nil ? prod.supplier.name : "No tiene proveedor" %></td>
-        <td><%= prod.last_price_update_date %></td>
-        <td><%= prod.last_stock_update_date %></td>
-        <td>
-          <div class="btn-group" role="group">
-            <%= link_to "Mostrar", product_path(prod), html_options = {class: "btn btn-info btn-xs"} %>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @products.present? %>
+  <div class="table-responsive">
+    <table class="table table-bordered" id="tabla-productos" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Código</th>
+          <th>Nombre producto</th>
+          <th>Existencia</th>
+          <th>PU Venta</th>
+          <th>PU Compra</th>
+          <th>Proveedor</th>
+          <th>Últ. Actualización Precio</th>
+          <th>Últ. Actualización Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |prod| %>
+          <tr id="producto_<%= prod.id %>" >
+            <td><%= image_tag prod.image_product, size: "50x50", class: "rounded-circle" if prod.image_product? %></td>
+            <td><%= prod.cod %></td>
+            <td><%= prod.name %></td>
+            <td><%= prod.existence %></td>
+            <td>$<%= prod.selling_unit_price %></td>
+            <td>$<%= prod.unit_cost %></td>
+            <td><%= prod.supplier != nil ? prod.supplier.name : "No tiene proveedor" %></td>
+            <td><%= prod.last_price_update_date %></td>
+            <td><%= prod.last_stock_update_date %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+<% if @suppliers.present? %>
+  <%= @suppliers.length%>
+<% end %>
+<% if @clients.present? %>
+  <%= @suppliers.length%>
+<% end %>

@@ -125,7 +125,7 @@
         <nav
             class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+          <button type="button" id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars">
             </i>
           </button>
@@ -149,15 +149,16 @@
               </a>
               <!-- Dropdown - Messages -->
               <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group"> <input id="dropdown-searcher" name="dropdown-searcher" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" autocomplete="off">
-                    <div class="input-group-append"><button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm">
-                        </i>
-                      </button>
+                <%= form_tag( '/search', data: { turbo: false }, class: "form-inline mr-auto w-100 navbar-search" ) do %>
+                  <div class="input-group">
+                    <%= text_field_tag("term", nil, class: "form-control bg-light border-0 small", placeholder: "Buscar...") %>
+                    <div class="input-group-append">
+                      <%= submit_tag("Buscar", class: "btn btn-primary") do %>
+                        <i class="fas fa-search fa-sm"></i>
+                      <% end %>
                     </div>
                   </div>
-                </form>
+                <% end %>
               </div>
             </li>
             <!-- Nav Item - Alerts -->
