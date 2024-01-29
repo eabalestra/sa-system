@@ -11,8 +11,18 @@ $('#producto_<%= @product.id %>').replaceWith(`
   <td><%= @product.last_price_update_date %></td>
   <td><%= @product.last_stock_update_date %></td>
   <td>
-    <%= link_to "Editar", edit_product_path(@product), html_options = {class: "btn btn-info btn-xs", remote: true} %>
-    <%= link_to "Borrar", @product, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{@product.name}?"}, class: "btn btn-danger btn-xs" %>
+    <div class="btn-group" role="group">
+      <%= link_to "Editar", edit_product_path(@product), html_options = {class: "btn btn-primary btn-xs", remote: true} %>
+      <%= link_to edit_product_path(@product), class: "btn btn-success btn-xs" do %>
+        <span class=""></span>
+        Act. Precio
+      <% end %>
+      <%= link_to edit_product_path(@product), html_options = {class: "btn btn-info btn-xs", remote: true} do %>
+        <span class=""></span>
+        Act. Stock
+      <% end %>
+      <%= link_to "Borrar", @product, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{@product.name}?"}, class: "btn btn-danger btn-xs" %>
+    </div>
   </tr>
   `
   );

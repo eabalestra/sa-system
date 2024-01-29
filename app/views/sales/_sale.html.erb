@@ -35,8 +35,8 @@
       <tr>
         <td><%= detalle.product.name %></td>
         <td><%= detalle.quantity %></td>
-        <td><%= detalle.product.selling_unit_price %></td>
-        <td><%= detalle.product.selling_unit_price * detalle.quantity %></td>
+        <td><%= detalle.price_at_sale %></td>
+        <td><%= detalle.price_at_sale * detalle.quantity %></td>
       </tr>
     <% end %>
   </tbody>

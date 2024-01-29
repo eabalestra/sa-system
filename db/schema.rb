@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_15_232202) do
     t.integer "quantity"
     t.integer "product_id", null: false
     t.integer "sale_id", null: false
+    t.decimal "price_at_sale"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

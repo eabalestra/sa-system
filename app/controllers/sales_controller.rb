@@ -49,7 +49,7 @@ class SalesController < ApplicationController
 
     product_amount = product.selling_unit_price * quantity
 
-    @sale_detail = @sale.sale_details.build(product: product, quantity: quantity)
+    @sale_detail = @sale.sale_details.build(product: product, quantity: quantity, price_at_sale: product.selling_unit_price)
 
     amount_before_registration = @sale.total_amount
     amount_after_registration = amount_before_registration + product_amount

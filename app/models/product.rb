@@ -16,4 +16,5 @@ class Product < ApplicationRecord
   def self.finder(term)
     Product.where('name LIKE ?', "%#{term}%")
   end
+
 end
