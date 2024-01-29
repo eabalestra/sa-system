@@ -130,16 +130,16 @@
             </i>
           </button>
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <%= form_tag('/search', data: { turbo: false }, class: "d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search") do %>
             <div class="input-group">
-              <input type="text" id="topbar-searcher" name="topbar-searcher" class="form-control bg-light border-0 small" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" autocomplete="off">
+              <%= text_field_tag("term", nil, class: "form-control bg-light border-0 small", placeholder: "Buscar...") %>
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <%= submit_tag("Buscar", class: "btn btn-primary") do %>
                   <i class="fas fa-search fa-sm"></i>
-                </button>
+                <% end %>
               </div>
             </div>
-          </form>
+          <% end %>
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->

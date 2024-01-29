@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:edit, :update, :destroy]
+  before_action :set_product, only: [:edit, :update, :destroy, :show]
   before_action :set_suppliers, only: [:new, :edit]
 
   def index
@@ -11,6 +11,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
+  end
+
+  def show
   end
 
   def create
