@@ -12,6 +12,10 @@ import "./jquery.min.js";
 import "./bootstrap.bundle.js";
 import "./sb-admin-2.min.js";
 
+import "chartkick"
+import "Chart.bundle"
+
+// Functions
 document.addEventListener("turbo:load", function () {
   $("#buscador_productos").on("input", function (event) {
     let term = $(this).val();
