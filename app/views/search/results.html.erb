@@ -1,4 +1,5 @@
 <% if @products.present? %>
+  <h3> Productos </h3>
   <div class="table-responsive">
     <table class="table table-bordered" id="tabla-productos" width="100%" cellspacing="0">
       <thead>
@@ -32,9 +33,57 @@
     </table>
   </div>
 <% end %>
-<% if @suppliers.present? %>
-  <%= @suppliers.length%>
-<% end %>
 <% if @clients.present? %>
-  <%= @suppliers.length%>
+  <h3> Clientes </h3>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="tablaClientes" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @clients.each do |clie| %>
+              <tr id="cliente_<%= clie.id %>">
+                <td><%= clie.name %></td>
+                <td><%= clie.dir %></td>
+                <td><%= clie.phone %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% if @suppliers.present? %>
+  <h3> Proveedores </h3>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="tablaProveedores" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @suppliers.each do |prov| %>
+              <tr id="proveedor_<%= prov.id %>" >
+                <td><%= prov.name %></td>
+                <td><%= prov.dir %></td>
+                <td><%= prov.phone %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 <% end %>
