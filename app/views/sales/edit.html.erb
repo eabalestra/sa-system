@@ -1,26 +1,23 @@
 <%= stylesheet_link_tag 'sales' %>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-12 col-md-6 text-left">
     <h3 class="h3 mb-2 text-gray-800">Punto de venta</h3>
-  </div>
-  <div class="col-md-6" style="text-align:right;">
-    <h2 id="importe_venta_lbl"> Importe $<%= @sale.total_amount %> </h2>
-  </div>
-  <div class="col-md-5">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buscador_producto">
-      Buscar producto
-    </button>
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#buscador_cliente">
-      Buscar cliente
-    </button>
-  </div>
-  <div class="col-md-7" style="text-align:right;">
     <div class="btn-group" role="group">
-      <label class="btn btn-primary">
-        <input type="checkbox" autocomplete="off" <%= 'checked' if @sale.paid %> >
-        Venta Pagada
-      </label>
-      <label>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buscador_producto">
+        Buscar producto
+      </button>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#buscador_cliente">
+        Buscar cliente
+      </button>
+    </div>
+    <div id="cliente_venta" class="nombre-cliente">
+      <%= "Cliente: #{@sale.client.present? ? @sale.client.name : 'Cliente general'}" %>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 text-right">
+    <h2 id="importe_venta_lbl"> Importe $<%= @sale.total_amount %> </h2>
+    <div class="btn-group" role="group">
+      <label class="mr-2">
         <%= link_to 'Finalizar venta', sales_path, class: "btn btn-success" %>
       </label>
       <label>
@@ -28,15 +25,12 @@
       </label>
     </div>
   </div>
-  <div id="cliente_venta" class="nombre-cliente col-md-3">
-    <%= "Cliente: #{@sale.client.present? ? @sale.client.name : 'Cliente general'}" %>
-  </div>
 </div>
 <br />
 <div class="card shadow mb-4">
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="tabla_ventas" width="80%" cellspacing="0">
+      <table class="table table-bordered" id="tabla_ventas" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th>Producto</th>
