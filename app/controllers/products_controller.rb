@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_action :set_suppliers, only: [:new, :edit]
 
   def index
-    @products = Product.all
+    @products = Product.order(last_price_update_date: :asc).paginate(page: params[:page], per_page: 10)
   end
 
   def new

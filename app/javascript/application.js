@@ -9,7 +9,10 @@ import "popper";
 import "bootstrap";
 
 import "./jquery.min.js";
+import "./jquery.easing.min.js";
+
 import "./bootstrap.bundle.js";
+
 import "./sb-admin-2.min.js";
 
 import "chartkick"

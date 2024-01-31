@@ -1,10 +1,10 @@
 <%= stylesheet_link_tag 'sales' %>
-<div class = "row">
+<div class="row">
   <div class="col-md-6">
     <h3 class="h3 mb-2 text-gray-800">Punto de venta</h3>
   </div>
   <div class="col-md-6" style="text-align:right;">
-    <h2 id="importe_venta_lbl" > Importe $<%= @sale.total_amount %> </h2>
+    <h2 id="importe_venta_lbl"> Importe $<%= @sale.total_amount %> </h2>
   </div>
   <div class="col-md-5">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buscador_producto">
@@ -15,11 +15,21 @@
     </button>
   </div>
   <div class="col-md-7" style="text-align:right;">
-    <%= link_to 'Finalizar venta', sales_path, class: "btn btn-success" %>
-    <%= link_to 'Cancelar venta', @sale, method: :delete, data: { confirm: '¿Cancelar la venta?' }, class: "btn btn-danger" %>
+    <div class="btn-group" role="group">
+      <label class="btn btn-primary">
+        <input type="checkbox" autocomplete="off" <%= 'checked' if @sale.paid %> >
+        Venta Pagada
+      </label>
+      <label>
+        <%= link_to 'Finalizar venta', sales_path, class: "btn btn-success" %>
+      </label>
+      <label>
+        <%= link_to 'Cancelar venta', @sale, method: :delete, data: { confirm: '¿Cancelar la venta?' }, class: "btn btn-danger" %>
+      </label>
+    </div>
   </div>
-  <div id="cliente_venta" class="nombre-cliente col-md-3" >
-    <%= "Cliente: #{@sale.client.present? ? @sale.client.name : "Cliente general"}" %>
+  <div id="cliente_venta" class="nombre-cliente col-md-3">
+    <%= "Cliente: #{@sale.client.present? ? @sale.client.name : 'Cliente general'}" %>
   </div>
 </div>
 <br />
