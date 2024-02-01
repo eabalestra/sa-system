@@ -1,18 +1,18 @@
 $('#modalSalePayments').modal('toggle');
 $('#venta_<%= @sale.id %>').replaceWith(
 `
-<tr>
+<tr id="venta_<%= @sale.id %>">
   <td> <%= @sale.id %> </td>
   <td> <%= @sale.user.email %> </td>
   <td> <%= @sale.try(:client).try(:name) %> </td>
   <td> <%= @sale.total_amount %> </td>
   <td>
-    <% if @sale.paid?() %>
+    <% if @sale.paid? %>
       <div class="alert alert-success" role="alert">
         <i class="fas fa-check"></i>
         COBRADA
       </div>
-    <% elsif @sale.pending_amount() < @sale.total_amount %>
+    <% elsif @sale.partially_paid? %>
       <div class="alert alert-warning" role="alert">
         <i class="fas fa-clock"></i>
         PARCIALMENTE COBRADA, FALTA: $<%= @sale.total_amount - @sale.paid_amount() %>
@@ -26,10 +26,16 @@ $('#venta_<%= @sale.id %>').replaceWith(
   </td>
   <td>
     <div class="btn-group" role="group">
-      <% if not @sale.paid?() %>
+      <% if not @sale.paid? %>
         <%= link_to new_sale_sale_payment_path(@sale), {remote: true, class: "btn btn-warning mb-2 mb-md-0 mr-md-2", id: "anadir-sale-payments-btn"}  do %>
           <i class="fas fa-file-invoice-dollar"></i>
           Registrar Cobro
+        <% end %>
+      <% end %>
+      <% if not @sale.unpaid? %>
+        <%= link_to sale_sale_payments_path(@sale), { class: 'btn btn-dark mb-2 mb-md-0 mr-md-2' } do %>
+          <i class="fas fa-receipt"></i>
+          Ver Cobros
         <% end %>
       <% end %>
       <%= link_to sale_path(@sale), {class: "btn btn-info mb-2 mb-md-0 mr-md-2", remote: true} do%>

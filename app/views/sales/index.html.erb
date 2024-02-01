@@ -44,12 +44,12 @@
                 <td> <%= venta.try(:client).try(:name) %> </td>
                 <td> <%= venta.total_amount %> </td>
                 <td>
-                  <% if venta.paid?() %>
+                  <% if venta.paid? %>
                     <div class="alert alert-success" role="alert">
                       <i class="fas fa-check"></i>
                       COBRADA
                     </div>
-                  <% elsif venta.pending_amount() < venta.total_amount %>
+                  <% elsif venta.partially_paid? %>
                     <div class="alert alert-warning" role="alert">
                       <i class="fas fa-clock"></i>
                       PARCIALMENTE COBRADA, FALTA: $<%= venta.total_amount - venta.paid_amount() %>
@@ -63,10 +63,16 @@
                 </td>
                 <td>
                   <div class="btn-group" role="group">
-                    <% if not venta.paid?() %>
+                    <% if not venta.paid? %>
                       <%= link_to new_sale_sale_payment_path(venta), {remote: true, class: "btn btn-warning mb-2 mb-md-0 mr-md-2", id: "anadir-sale-payments-btn"}  do %>
                         <i class="fas fa-file-invoice-dollar"></i>
                         Registrar Cobro
+                      <% end %>
+                    <% end %>
+                    <% if not venta.unpaid? %>
+                      <%= link_to sale_sale_payments_path(venta), { class: 'btn btn-dark mb-2 mb-md-0 mr-md-2' } do %>
+                        <i class="fas fa-receipt"></i>
+                        Ver Cobros
                       <% end %>
                     <% end %>
                     <%= link_to sale_path(venta), {class: "btn btn-info mb-2 mb-md-0 mr-md-2", remote: true} do%>

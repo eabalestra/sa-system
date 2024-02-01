@@ -1,12 +1,12 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :create_payment, :receipt]
+  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :receipt]
 
   # GET /sales
   def index
     if params[:id]
-      @sales = Sale.where(id: params[:id]).order(paid: :asc, id: :desc).paginate(page: params[:page], per_page: 10)
+      @sales = Sale.where(id: params[:id]).paginate(page: params[:page], per_page: 10)
     else
-      @sales = Sale.order(paid: :asc, id: :desc).paginate(page: params[:page], per_page: 10)
+      @sales = Sale.order(:payment_status, id: :desc, total_amount: :desc).paginate(page: params[:page], per_page: 10)
     end
   end
 
@@ -98,16 +98,6 @@ class SalesController < ApplicationController
     else
       render json: { message: "El cliente no se encontró" }, status: :not_found
     end
-  end
-
-  def create_payment
-    @payment = @sale.sale_payments.create(amount: 0.0)
-    redirect_to edit_sale_path(@sale)
-  end
-
-  def edit_payment
-
-
   end
 
   # GET /sales/:id/receipt

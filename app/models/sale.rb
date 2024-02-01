@@ -9,16 +9,29 @@ class Sale < ApplicationRecord
   belongs_to :client, optional: true
   belongs_to :user
 
+  enum payment_status: { unpaid: 0, partially_paid: 1, paid: 2 }
+
   def paid_amount()
-    self.sale_payments.sum(:amount)
+    if not self.sale_payments.empty?
+      return self.sale_payments.sum(:amount)
+    end
   end
 
   def pending_amount()
-    self.total_amount - self.paid_amount()
+    if not self.sale_payments.empty?
+      self.total_amount - self.paid_amount()
+    end
   end
 
-  def paid?()
-    self.total_amount == paid_amount()
+  def update_paid_status
+    paid_amount = self.paid_amount()
+    if paid_amount > 0 and paid_amount < self.total_amount
+      self.update(payment_status: :partially_paid)
+    elsif paid_amount == self.total_amount
+      self.update(payment_status: :paid)
+    else
+      self.update(payment_status: :unpaid)
+    end
   end
 
   def self.generate_doc(sale)
@@ -57,4 +70,6 @@ class Sale < ApplicationRecord
 
     xlsx_data
   end
+
+
 end

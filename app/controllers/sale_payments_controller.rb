@@ -1,5 +1,9 @@
 class SalePaymentsController < ApplicationController
-  before_action :set_sale, only: [:new, :create]
+  before_action :set_sale, only: [:index, :new, :create]
+
+  def index
+    @payments = @sale.sale_payments.order(:date)
+  end
 
   def new
     @payment = @sale.sale_payments.build
@@ -11,6 +15,7 @@ class SalePaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
+        @payment.sale.update_paid_status
         format.json { head :no_content }
         format.js
       else
@@ -18,7 +23,6 @@ class SalePaymentsController < ApplicationController
         format.js { render :new }
       end
     end
-
   end
 
   private
