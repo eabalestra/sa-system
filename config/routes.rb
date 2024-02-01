@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   resources :sales, except: %i[show, update] do
     member do
       get :receipt
-      patch :register_payment
     end
+    resources :sale_payments, controller: 'sale_payments'
   end
 
   get 'product_finder/:term', to: 'products#finder'

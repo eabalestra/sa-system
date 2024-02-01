@@ -1,5 +1,5 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :register_payment, :receipt]
+  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :create_payment, :receipt]
 
   # GET /sales
   def index
@@ -100,19 +100,14 @@ class SalesController < ApplicationController
     end
   end
 
-  # POST /sales/:id/register_payment
-  def register_payment
-    payment = @sale.payments.build(amount: params[:amount], date: Time.now)
+  def create_payment
+    @payment = @sale.sale_payments.create(amount: 0.0)
+    redirect_to edit_sale_path(@sale)
+  end
 
-    respond_to do |format|
-      if payment.save
-        format.html { redirect_to sales_url, notice: "El pago de la venta ha sido registrado." }
-        format.json { head :no_content }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: payment.errors, status: :unprocessable_entity }
-      end
-    end
+  def edit_payment
+
+
   end
 
   # GET /sales/:id/receipt

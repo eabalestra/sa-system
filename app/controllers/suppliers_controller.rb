@@ -5,6 +5,7 @@ class SuppliersController < ApplicationController
     @proveedores = Supplier.all
   end
 
+  # GET /suppliers/new
   def new
     @proveedor = Supplier.new
   end
@@ -12,6 +13,7 @@ class SuppliersController < ApplicationController
   def edit
   end
 
+  # POST /suppliers
   def create
     @proveedor = Supplier.new(supplier_params)
 

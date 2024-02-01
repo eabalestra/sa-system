@@ -9,12 +9,16 @@ class Sale < ApplicationRecord
   belongs_to :client, optional: true
   belongs_to :user
 
+  def paid_amount()
+    self.sale_payments.sum(:amount)
+  end
+
   def pending_amount()
-    self.total_amount - self.sale_payments.sum(:amount)
+    self.total_amount - self.paid_amount()
   end
 
   def paid?()
-    self.total_amount == self.sale_payments.sum(:amount)
+    self.total_amount == paid_amount()
   end
 
   def self.generate_doc(sale)
