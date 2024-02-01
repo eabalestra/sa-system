@@ -4,7 +4,6 @@ class CreateSales < ActiveRecord::Migration[7.1]
       t.decimal :total_amount
       t.references :user, foreign_key: true
       t.references :client, foreign_key: true
-      t.boolean :paid, default: false
 
       t.timestamps
     end

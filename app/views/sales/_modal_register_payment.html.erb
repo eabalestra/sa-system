@@ -1,0 +1,32 @@
+<!-- Modal -->
+<div class="modal fade" id="registerPayment" tabindex="-1" role="dialog" aria-labelledby="saleSearchModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerPaymentTittle">Registrar Cobro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with method: :patch, local: true, html: { 'data-url-template': register_payment_sale_path(':id') } do |form| %>
+          <div class="form-group">
+            <%= form.label :amount, 'Monto a cobrar:' %>
+            <%= form.text_field :amount, class: 'form-control' %>
+          </div>
+          <%= form.submit 'Registrar', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#registerPayment').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botón que disparó el modal
+    var saleId = button.data('sale-id') // Extrae el id de la venta del data attribute
+    var form = $(this).find('form') // Encuentra el formulario dentro del modal
+    var urlTemplate = form.data('url-template') // Obtiene la plantilla de URL del formulario
+    var action = urlTemplate.replace(':id', saleId) // Construye la nueva acción
+    form.attr('action', action) // Actualiza la acción del formulario
+  })
+</script>

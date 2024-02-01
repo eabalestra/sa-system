@@ -1,12 +1,12 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client]
+  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :register_payment, :receipt]
 
   # GET /sales
   def index
     if params[:id]
-      @sales = Sale.where(id: params[:id]).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+      @sales = Sale.where(id: params[:id]).order(paid: :asc, id: :desc).paginate(page: params[:page], per_page: 10)
     else
-      @sales = Sale.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+      @sales = Sale.order(paid: :asc, id: :desc).paginate(page: params[:page], per_page: 10)
     end
   end
 
@@ -97,6 +97,21 @@ class SalesController < ApplicationController
       end
     else
       render json: { message: "El cliente no se encontró" }, status: :not_found
+    end
+  end
+
+  # POST /sales/:id/register_payment
+  def register_payment
+    payment = @sale.payments.build(amount: params[:amount], date: Time.now)
+
+    respond_to do |format|
+      if payment.save
+        format.html { redirect_to sales_url, notice: "El pago de la venta ha sido registrado." }
+        format.json { head :no_content }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: payment.errors, status: :unprocessable_entity }
+      end
     end
   end
 

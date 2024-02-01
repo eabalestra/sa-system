@@ -25,7 +25,8 @@
             <th>Vendedor</th>
             <th>Cliente</th>
             <th>Importe</th>
-            <th></th>
+            <th>ESTADO</th>
+            <th>Acciones: </th>
           </tr>
         </thead>
         <tbody>
@@ -43,13 +44,44 @@
                 <td> <%= venta.try(:client).try(:name) %> </td>
                 <td> <%= venta.total_amount %> </td>
                 <td>
-                  <div class="d-flex flex-column flex-md-row justify-content-start">
-                    <%= link_to 'Detalles', sale_path(venta), {class: "btn btn-info btn-xs mb-2 mb-md-0 mr-md-2", remote: true} %>
+                  <% if venta.paid?() %>
+                    <div class="alert alert-success" role="alert">
+                      <i class="fas fa-check"></i>
+                      COBRADA
+                    </div>
+                  <% elsif venta.pending_amount() < venta.total_amount %>
+                    <div class="alert alert-warning" role="alert">
+                      <i class="fas fa-clock"></i>
+                      PARCIALMENTE COBRADA, FALTA: $<%= venta.total_amount - venta.total_paid() %>
+                    </div>
+                  <% else %>
+                    <div class="alert alert-danger" role="alert">
+                      <i class="fas fa-exclamation-triangle"></i>
+                      PENDIENTE DE COBRO
+                    </div>
+                  <% end %>
+                </td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <% if not venta.paid?() %>
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-warning mb-2 mb-md-0 mr-md-2" data-bs-toggle="modal" data-bs-target="#registerPayment" data-sale-id="<%= venta.id %>">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        Registrar Cobro
+                      </button>
+                    <% end %>
+                    <%= link_to sale_path(venta), {class: "btn btn-info mb-2 mb-md-0 mr-md-2", remote: true} do%>
+                      <i class="fas fa-info-circle"></i>
+                      Detalles
+                    <% end %>
                     <%= link_to receipt_sale_path(venta), class: "btn btn-success mb-2 mb-md-0 mr-md-2" do %>
                       <span class="fa fa-download"> </span>
                       Comprobante
                     <% end %>
-                    <%= link_to 'Borrar', venta, method: :delete, data: { confirm: 'Eliminar la venta?' }, class: "btn btn-danger btn-xs mb-2 mb-md-0 mr-md-2" %>
+                    <%= link_to sale_path(venta), method: :delete, data: { confirm: '¿Eliminar la venta?' }, class: "btn btn-danger mb-2 mb-md-0 mr-md-2" do %>
+                      <i class="fas fa-trash-alt"></i>
+                      Borrar
+                    <% end %>
                   </div>
                 </td>
               </tr>
@@ -57,9 +89,24 @@
           <% end %>
         </tbody>
       </table>
-      <%= will_paginate @sales %>
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item <%= 'disabled' if @sales.current_page == 1 %>">
+            <%= link_to 'Atrás', url_for(page: @sales.current_page - 1), class: 'page-link' %>
+          </li>
+          <% @sales.total_pages.times do |i| %>
+            <li class="page-item <%= 'active' if @sales.current_page == i + 1 %>" aria-current="page">
+              <%= link_to i + 1, url_for(page: i + 1), class: 'page-link' %>
+            </li>
+          <% end %>
+          <li class="page-item <%= 'disabled' if @sales.current_page == @sales.total_pages %>">
+            <%= link_to 'Siguiente', url_for(page: @sales.current_page + 1), class: 'page-link' %>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
 <%= render 'modal_sales' %>
 <%= render 'modal_sale_search' %>
+<%= render 'modal_register_payment' %>

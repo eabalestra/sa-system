@@ -4,8 +4,18 @@ require 'rubyXL/convenience_methods'
 class Sale < ApplicationRecord
   # Associations
   has_many :sale_details, dependent: :destroy
+  has_many :sale_payments, dependent: :destroy
+
   belongs_to :client, optional: true
   belongs_to :user
+
+  def pending_amount()
+    self.total_amount - self.sale_payments.sum(:amount)
+  end
+
+  def paid?()
+    self.total_amount == self.sale_payments.sum(:amount)
+  end
 
   def self.generate_doc(sale)
     path = "#{Rails.root}/app/views/excel_templates/comprobante-descartables-sa.xlsx"

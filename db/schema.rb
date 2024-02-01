@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_15_232202) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -77,6 +77,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_15_232202) do
     t.index ["sale_id"], name: "index_sale_details_on_sale_id"
   end
 
+  create_table "sale_payments", force: :cascade do |t|
+    t.integer "sale_id", null: false
+    t.decimal "amount", null: false
+    t.datetime "date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sale_id"], name: "index_sale_payments_on_sale_id"
+  end
+
   create_table "sales", force: :cascade do |t|
     t.decimal "total_amount"
     t.integer "user_id"
@@ -116,6 +125,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_15_232202) do
   add_foreign_key "products", "suppliers"
   add_foreign_key "sale_details", "products"
   add_foreign_key "sale_details", "sales"
+  add_foreign_key "sale_payments", "sales"
   add_foreign_key "sales", "clients"
   add_foreign_key "sales", "users"
 end
