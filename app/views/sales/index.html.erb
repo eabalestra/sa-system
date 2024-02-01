@@ -21,7 +21,7 @@
       <table class="table table-bordered" id="tabla_ventas" width="60%" cellspacing="0">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>ID</th>
             <th>Vendedor</th>
             <th>Cliente</th>
             <th>Importe</th>
@@ -38,7 +38,7 @@
             </tr>
           <% else %>
             <% @sales.each do |venta| %>
-              <tr>
+              <tr id="venta_<%= venta.id %>">
                 <td> <%= venta.id %> </td>
                 <td> <%= venta.user.email %> </td>
                 <td> <%= venta.try(:client).try(:name) %> </td>
@@ -52,7 +52,7 @@
                   <% elsif venta.pending_amount() < venta.total_amount %>
                     <div class="alert alert-warning" role="alert">
                       <i class="fas fa-clock"></i>
-                      PARCIALMENTE COBRADA, FALTA: $<%= venta.total_amount - venta.total_paid() %>
+                      PARCIALMENTE COBRADA, FALTA: $<%= venta.total_amount - venta.paid_amount() %>
                     </div>
                   <% else %>
                     <div class="alert alert-danger" role="alert">
@@ -64,11 +64,10 @@
                 <td>
                   <div class="btn-group" role="group">
                     <% if not venta.paid?() %>
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-warning mb-2 mb-md-0 mr-md-2" data-bs-toggle="modal" data-bs-target="#registerPayment" data-sale-id="<%= venta.id %>">
+                      <%= link_to new_sale_sale_payment_path(venta), {remote: true, class: "btn btn-warning mb-2 mb-md-0 mr-md-2", id: "anadir-sale-payments-btn"}  do %>
                         <i class="fas fa-file-invoice-dollar"></i>
                         Registrar Cobro
-                      </button>
+                      <% end %>
                     <% end %>
                     <%= link_to sale_path(venta), {class: "btn btn-info mb-2 mb-md-0 mr-md-2", remote: true} do%>
                       <i class="fas fa-info-circle"></i>
@@ -109,4 +108,4 @@
 </div>
 <%= render 'modal_sales' %>
 <%= render 'modal_sale_search' %>
-<%= render 'modal_register_payment' %>
+<%= render 'sale_payments/modal_sale_payments' %>
