@@ -9,11 +9,4 @@ class SaleDetail < ApplicationRecord
   validates :sale_id, presence: true
   validates :price_at_sale, presence: true, numericality: { greater_than: 0 }
 
-  before_create :set_date
-
-  private
-
-  def set_date
-    self.date = Date.today
-  end
 end

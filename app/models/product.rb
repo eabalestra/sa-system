@@ -41,7 +41,7 @@ class Product < ApplicationRecord
   end
 
   def calculate_selling_unit_price
-    self.selling_unit_price = self.unit_cost * (1 + self.profit_margin + self.iva_amount)
+    self.selling_unit_price = self.unit_cost * (1 + self.profit_margin) * (1 + self.iva_amount)
   end
 
 end
