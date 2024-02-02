@@ -11,6 +11,11 @@ class Sale < ApplicationRecord
 
   enum payment_status: { unpaid: 0, partially_paid: 1, paid: 2 }
 
+  # Validations
+  validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0}
+  validates :user_id, presence: true
+  validates :payment_status, presence: true
+
   def paid_amount()
     if not self.sale_payments.empty?
       return self.sale_payments.sum(:amount)

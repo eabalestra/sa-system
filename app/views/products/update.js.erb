@@ -1,6 +1,3 @@
-if ($('#modalUpdateProductPrice').hasClass('show')) {
-$('#modalUpdateProductPrice').modal('hide');
-} 
 if ($('#modalProductos').hasClass('show')) {
 $('#modalProductos').modal('hide');
 } 
@@ -18,15 +15,13 @@ $('#producto_<%= @product.id %>').replaceWith(`
   <td><%= @product.existence %></td>
   <td>$<%= @product.selling_unit_price %></td>
   <td>$<%= @product.unit_cost %></td>
+  <td><%= @product.profit_margin * 100 %>%</td>
+  <td><%= @product.iva_amount * 100 %>%</td>
   <td><%= @product.supplier != nil ? @product.supplier.name : "No tiene proveedor" %></td>
   <td><%= @product.last_price_update_date %></td>
   <td><%= @product.last_stock_update_date %></td>
   <td>
     <div class="btn-group" role="group">
-      <%= link_to edit_price_product_path(@product), { class: "btn btn-success btn-xs", remote: true } do %>
-        <i class="fas fa-tags"></i>
-        Act. PU de Venta
-      <% end %>
       <%= link_to edit_purchase_price_product_path(@product),  html_options = {class: "btn btn-warning btn-xs", remote: true} do %>
         <i class="fas fa-tags"></i>
         Act. PU de Compra

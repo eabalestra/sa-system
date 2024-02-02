@@ -14,8 +14,6 @@ Rails.application.routes.draw do
   resources :suppliers, except: %i[show]
   resources :products do
     member do
-      get :edit_price
-      patch :update_price
       get :edit_stock
       patch :update_stock
       get :edit_purchase_price

@@ -60,6 +60,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
     t.decimal "selling_unit_price"
     t.string "image_product"
     t.integer "supplier_id"
+    t.decimal "iva_amount", precision: 8, scale: 2
+    t.decimal "profit_margin", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
@@ -70,7 +72,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
     t.integer "product_id", null: false
     t.integer "sale_id", null: false
     t.decimal "price_at_sale"
-    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_sale_details_on_product_id"
@@ -103,6 +104,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
     t.string "dir"
     t.string "email"
     t.string "city"
+    t.string "website"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

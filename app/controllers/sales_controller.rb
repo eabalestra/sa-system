@@ -45,7 +45,16 @@ class SalesController < ApplicationController
   # POST /add_item_sale
   def add_item
     product = Product.find(params[:product_id])
-    quantity = params[:quantity].nil? ? 1 : params[:quantity].to_i
+
+    if product.nil?
+      return render json: { message: "El producto no se encontró" }, status: :not_found
+    elsif product.existence <= 0
+      return render json: { message: "El producto no tiene stock" }, status: :unprocessable_entity
+    elsif product.existence < params[:quantity].to_i
+      return render json: { message: "No hay suficiente stock" }, status: :unprocessable_entity
+    else
+      quantity = params[:quantity].nil? ? 1 : params[:quantity].to_i
+    end
 
     product_amount = product.selling_unit_price * quantity
 

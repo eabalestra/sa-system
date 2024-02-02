@@ -85,11 +85,15 @@ group :development do
   # gem "spring"
 
   gem 'htmlbeautifier'
-  gem "faker", "~> 3.2"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'faker'
+  gem 'simplecov', require: false
 end

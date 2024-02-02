@@ -15,10 +15,14 @@ import "./bootstrap.bundle.js";
 
 import "./sb-admin-2.min.js";
 
-import "chartkick"
-import "Chart.bundle"
+import "chartkick";
+import "Chart.bundle";
 
 // Functions
+$(function() {
+  $('#flashModal').modal('show');
+});
+
 document.addEventListener("turbo:load", function () {
   $("#buscador_productos").on("input", function (event) {
     let term = $(this).val();
@@ -197,7 +201,11 @@ function addItemSales(product_id, sale_id) {
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.error("Error adding item sale:", textStatus, errorThrown);
+      if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+        alert(jqXHR.responseJSON.message);
+      } else {
+        console.error("Error adding item sale:", textStatus, errorThrown);
+      }
     },
   });
 }

@@ -11,6 +11,8 @@ class CreateProducts < ActiveRecord::Migration[7.1]
       t.decimal :selling_unit_price
       t.string :image_product
       t.references :supplier, foreign_key: true
+      t.decimal :iva_amount, precision: 8, scale: 2
+      t.decimal :profit_margin, precision: 8, scale: 2
 
       t.timestamps
     end
