@@ -46,16 +46,26 @@
               <td><%= prod.last_stock_update_date %></td>
               <td>
                 <div class="btn-group" role="group">
-                  <%= link_to "Editar", edit_product_path(prod), html_options = {class: "btn btn-primary btn-xs", remote: true} %>
-                  <%= link_to edit_product_path(prod), class: "btn btn-success btn-xs" do %>
-                    <span class=""></span>
-                    Act. Precio
+                  <%= link_to edit_price_product_path(prod), { class: "btn btn-success btn-xs", remote: true } do %>
+                    <i class="fas fa-tags"></i>
+                    Act. PU de Venta
                   <% end %>
-                  <%= link_to edit_product_path(prod), html_options = {class: "btn btn-info btn-xs", remote: true} do %>
-                    <span class=""></span>
+                  <%= link_to edit_purchase_price_product_path(prod),  html_options = {class: "btn btn-warning btn-xs", remote: true} do %>
+                    <i class="fas fa-tags"></i>
+                    Act. PU de Compra
+                  <% end %>
+                  <%= link_to edit_stock_product_path(prod), html_options = {class: "btn btn-info btn-xs", remote: true} do %>
+                    <i class="fas fa-cubes"></i>
                     Act. Stock
                   <% end %>
-                  <%= link_to "Borrar", prod, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{prod.name}?"}, class: "btn btn-danger btn-xs" %>
+                  <%= link_to edit_product_path(prod), data: { modal: 'modalProducts' }, class: "btn btn-primary btn-xs", remote: true do %>
+                    <i class="fas fa-edit"></i>
+                    Editar
+                  <% end %>
+                  <%= link_to prod, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{prod.name}?"}, class: "btn btn-danger btn-xs" do%>
+                    <i class="fas fa-trash-alt"></i>
+                    Borrar
+                  <% end %>
                 </div>
               </td>
             </tr>
@@ -82,3 +92,6 @@
 </div>
 <%= render 'modal_productos' %>
 <%= render 'modal_product_search' %>
+<%= render 'modal_update_product_prices' %>
+<%= render 'modal_update_stock' %>
+<%= render 'modal_update_purchase_price' %>

@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:edit, :update, :destroy, :show]
+  before_action :set_product, only: [:edit, :update, :destroy, :show, :edit_price, :update_price, :edit_stock, :update_stock, :edit_purchase_price, :update_purchase_price]
   before_action :set_suppliers, only: [:new, :edit]
 
   def index
@@ -15,6 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @modal = params[:modal]
   end
 
   def show
@@ -64,6 +65,42 @@ class ProductsController < ApplicationController
     end
     respond_to do |format|
       format.json { render :json => @resultados }
+    end
+  end
+
+  def edit_price
+  end
+
+  def update_price
+    @product.update(selling_unit_price: params[:selling_unit_price], last_price_update_date: Time.now)
+
+    respond_to do |format|
+      format.json { head :no_content }
+      format.js
+    end
+  end
+
+  def edit_stock
+  end
+
+  def update_stock
+    @product.update(existence: params[:existence], last_stock_update_date: Time.now)
+
+    respond_to do |format|
+      format.json { head :no_content }
+      format.js
+    end
+  end
+
+  def edit_purchase_price
+  end
+
+  def update_purchase_price
+    @product.update(unit_cost: params[:unit_cost])
+
+    respond_to do |format|
+      format.json { head :no_content }
+      format.js
     end
   end
 

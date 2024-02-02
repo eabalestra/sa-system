@@ -6,6 +6,7 @@ class CreateSuppliers < ActiveRecord::Migration[7.1]
       t.string :dir
       t.string :email
       t.string :city
+      t.string :website
 
       t.timestamps
     end

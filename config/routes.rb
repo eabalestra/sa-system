@@ -12,7 +12,16 @@ Rails.application.routes.draw do
 
   resources :clients, except: %i[show]
   resources :suppliers, except: %i[show]
-  resources :products
+  resources :products do
+    member do
+      get :edit_price
+      patch :update_price
+      get :edit_stock
+      patch :update_stock
+      get :edit_purchase_price
+      patch :update_purchase_price
+    end
+  end
   resources :sales, except: %i[show, update] do
     member do
       get :receipt
