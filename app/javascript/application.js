@@ -19,10 +19,6 @@ import "chartkick";
 import "Chart.bundle";
 
 // Functions
-$(function() {
-  $('#flashModal').modal('show');
-});
-
 document.addEventListener("turbo:load", function () {
   $("#buscador_productos").on("input", function (event) {
     let term = $(this).val();

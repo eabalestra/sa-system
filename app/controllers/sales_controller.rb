@@ -13,7 +13,7 @@ class SalesController < ApplicationController
   # GET /sales/new
   def new
     @sale = current_user.sales.create(total_amount: 0.0)
-    redirect_to edit_sale_path(@sale)
+    redirect_to edit_sale_path(@sale), notice: "La venta ha sido creada"
   end
 
   def show
