@@ -96,20 +96,20 @@
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+            <%# <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">Dropdown Header:</div>
               <a class="dropdown-item" href="#">Action</a>
               <a class="dropdown-item" href="#">Another action</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+            </div> %>
           </div>
         </div>
         <!-- Card Body -->
         <div class="card-body">
           <div class="chart-area">
             <div class="chart-pie pt-4 pb-2">
-              <%= line_chart Sale.group_by_day(:created_at).count %>
+              <%= line_chart Sale.group_by_day(:created_at).count, points: false, loading: "Cargando gráfico..." %>
             </div>
           </div>
         </div>
