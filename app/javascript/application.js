@@ -18,12 +18,6 @@ import "./sb-admin-2.min.js";
 import "chartkick";
 import "Chart.bundle";
 
-$(function() {
-  setTimeout(function() {
-    $('.alert').fadeOut('slow');
-  }, 2000);
-});
-
 // Functions
 document.addEventListener("turbo:load", function () {
   $("#buscador_productos").on("input", function (event) {
