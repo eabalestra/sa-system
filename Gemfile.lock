@@ -140,6 +140,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.5.1)
     docile (1.4.0)
     drb (2.2.0)
       ruby2_keywords
@@ -270,6 +271,23 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.6)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (6.1.1)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.12)
+      rspec-expectations (~> 3.12)
+      rspec-mocks (~> 3.12)
+      rspec-support (~> 3.12)
+    rspec-support (3.13.0)
     ruby2_keywords (0.0.5)
     rubyXL (3.4.25)
       nokogiri (>= 1.10.8)
@@ -371,10 +389,12 @@ DEPENDENCIES
   jquery-rails
   puma (>= 5.0)
   rails (~> 7.1.2)
+  rspec-rails (~> 6.1)
   rubyXL
   selenium-webdriver
   shoulda-matchers
-  simplecov
+  simplecov (~> 0.22.0)
+  simplecov_json_formatter (~> 0.1.4)
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails

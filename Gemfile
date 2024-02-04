@@ -95,5 +95,7 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'faker'
-  gem 'simplecov', require: false
+  gem "rspec-rails", "~> 6.1", :groups => [:development, :test]
+  gem "simplecov", "~> 0.22.0", :group => :test, :require => false
+  gem "simplecov_json_formatter", "~> 0.1.4", :group => :test, :require => false
 end
