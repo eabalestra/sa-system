@@ -10,7 +10,6 @@ gem 'rails', '~> 7.1.2'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 
@@ -65,6 +64,11 @@ gem 'will_paginate', '~> 4.0'
 # Graphs
 gem "chartkick", "~> 5.0"
 gem "groupdate", "~> 6.4"
+
+group :production do
+  # Database adapter for PostgreSQL
+  gem 'pg'
+end
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
