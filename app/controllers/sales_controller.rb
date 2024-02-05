@@ -1,19 +1,19 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client]
+  before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :receipt]
 
   # GET /sales
   def index
     if params[:id]
-      @sales = Sale.where(id: params[:id]).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+      @sales = Sale.where(id: params[:id]).paginate(page: params[:page], per_page: 10)
     else
-      @sales = Sale.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+      @sales = Sale.order(:payment_status, id: :desc, total_amount: :desc).paginate(page: params[:page], per_page: 10)
     end
   end
 
   # GET /sales/new
   def new
     @sale = current_user.sales.create(total_amount: 0.0)
-    redirect_to edit_sale_path(@sale)
+    redirect_to edit_sale_path(@sale), notice: "La venta ha sido creada"
   end
 
   def show
@@ -45,11 +45,20 @@ class SalesController < ApplicationController
   # POST /add_item_sale
   def add_item
     product = Product.find(params[:product_id])
-    quantity = params[:quantity].nil? ? 1 : params[:quantity].to_i
+
+    if product.nil?
+      return render json: { message: "El producto no se encontró" }, status: :not_found
+    elsif product.existence <= 0
+      return render json: { message: "El producto no tiene stock" }, status: :unprocessable_entity
+    elsif product.existence < params[:quantity].to_i
+      return render json: { message: "No hay suficiente stock" }, status: :unprocessable_entity
+    else
+      quantity = params[:quantity].nil? ? 1 : params[:quantity].to_i
+    end
 
     product_amount = product.selling_unit_price * quantity
 
-    @sale_detail = @sale.sale_details.build(product: product, quantity: quantity)
+    @sale_detail = @sale.sale_details.build(product: product, quantity: quantity, price_at_sale: product.selling_unit_price)
 
     amount_before_registration = @sale.total_amount
     amount_after_registration = amount_before_registration + product_amount

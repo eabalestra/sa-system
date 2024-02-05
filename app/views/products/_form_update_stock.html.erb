@@ -1,0 +1,13 @@
+<%= form_for @product, remote: true do |f| %>
+  <div class="item form-group<%= @product.errors[:existence].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :existence, "Nueva Cantidad en Inventario: " %>
+    <div class="input-group">
+      <%= f.number_field :existence, {:class=> "form-control", :placeholder=>"Ingrese la nueva cantidad en stock del producto..."} %>
+      <%if @product.errors[:existence].any? %>
+        <p class="bg-danger"><%= @product.errors[:existence].to_s[/\w([^"]*)/] %></p>
+      <% end %>
+    </div>
+  </div>
+  <%= f.submit "Guardar", class: "btn btn-primary" %>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<% end %>

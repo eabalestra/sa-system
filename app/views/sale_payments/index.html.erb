@@ -1,0 +1,40 @@
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Registro de montos recibidos como pago por la venta N°<%= @sale.id %></h1>
+<%= link_to sales_path, { type:"button", class: 'btn btn-secondary mb-2 mb-md-0 mr-md-2' } do %>
+  <span class="fa fa-arrow-left"></span>
+  Volver atrás
+<% end %>
+<br />
+<br />
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="tabla" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @sale.sale_payments.empty? %>
+            <tr>
+              <td> No hay pagos registrados </td>
+              <td></td>
+              <td></td>
+            </tr>
+          <% else %>
+            <% @sale.sale_payments.each do |payment| %>
+              <tr id="pago_<%= payment.id %>">
+                <td> <%= payment.id %> </td>
+                <td> $<%= payment.amount %> </td>
+                <td> <%= payment.created_at %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

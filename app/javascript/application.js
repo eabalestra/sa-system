@@ -9,9 +9,16 @@ import "popper";
 import "bootstrap";
 
 import "./jquery.min.js";
+import "./jquery.easing.min.js";
+
 import "./bootstrap.bundle.js";
+
 import "./sb-admin-2.min.js";
 
+import "chartkick";
+import "Chart.bundle";
+
+// Functions
 document.addEventListener("turbo:load", function () {
   $("#buscador_productos").on("input", function (event) {
     let term = $(this).val();
@@ -190,7 +197,11 @@ function addItemSales(product_id, sale_id) {
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.error("Error adding item sale:", textStatus, errorThrown);
+      if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+        alert(jqXHR.responseJSON.message);
+      } else {
+        console.error("Error adding item sale:", textStatus, errorThrown);
+      }
     },
   });
 }

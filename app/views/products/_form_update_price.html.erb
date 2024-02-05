@@ -1,0 +1,13 @@
+<%= form_for @product, remote: true do |f| %>
+  <div class="item form-group<%= @product.errors[:selling_unit_price].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :selling_unit_price, "Precio de compra por unidad:"%>
+    <div class="input-group">
+      <%= f.number_field :selling_unit_price, {:class=> "form-control", :placeholder=>"Ingrese el nuevo precio de compra por unidad..."} %>
+      <%if @product.errors[:selling_unit_price].any? %>
+        <p class="bg-danger"><%= @product.errors[:selling_unit_price].to_s[/\w([^"]*)/] %></p>
+      <% end %>
+    </div>
+  </div>
+  <%= f.submit "Guardar", class: "btn btn-primary" %>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<% end %>

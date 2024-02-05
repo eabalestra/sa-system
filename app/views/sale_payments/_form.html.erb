@@ -1,0 +1,13 @@
+<%= form_for [@sale, @payment], url: sale_sale_payments_path(@sale), remote: true, multiple: true do |f| %>
+  <div class="item form-group<%= @payment.errors[:amount].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :amount, "Monto recibido: " %>
+    <div class="input-group">
+      <%= f.number_field :amount, {:class=> "form-control", :placeholder=>"Introduzca el monto recibido de pago por la venta..."} %>
+      <%if @payment.errors[:amount].any? %>
+        <p class="bg-danger"><%= @payment.errors[:amount].to_s[/\w([^"]*)/] %></p>
+      <% end %>
+    </div>
+  </div>
+  <%= f.submit "Registrar Cobro", class: "btn btn-primary" %>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<% end %>

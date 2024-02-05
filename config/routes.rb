@@ -12,11 +12,19 @@ Rails.application.routes.draw do
 
   resources :clients, except: %i[show]
   resources :suppliers, except: %i[show]
-  resources :products, except: %i[show]
+  resources :products do
+    member do
+      get :edit_stock
+      patch :update_stock
+      get :edit_purchase_price
+      patch :update_purchase_price
+    end
+  end
   resources :sales, except: %i[show, update] do
     member do
       get :receipt
     end
+    resources :sale_payments, controller: 'sale_payments'
   end
 
   get 'product_finder/:term', to: 'products#finder'
@@ -24,4 +32,6 @@ Rails.application.routes.draw do
 
   get 'client_finder/:term', to: 'clients#finder'
   post '/add_client_sale', to: 'sales#add_client'
+
+  post '/search', to: 'search#results'
 end

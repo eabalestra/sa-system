@@ -114,6 +114,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    chartkick (5.0.5)
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     crass (1.0.6)
@@ -123,6 +124,12 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.4)
     debug (1.9.1)
       irb (~> 1.10)
@@ -133,16 +140,26 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    docile (1.4.0)
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
     execjs (2.9.1)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.2.3)
+      i18n (>= 1.8.11, < 2)
     font_awesome5_rails (1.5.0)
       nokogiri (>= 1.11.3)
       railties (>= 4.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.25.2)
+    groupdate (6.4.0)
+      activesupport (>= 6.1)
     htmlbeautifier (1.4.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -199,6 +216,7 @@ GEM
     nokogiri (1.16.0-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.5.4)
     popper_js (2.11.8)
     psych (5.1.2)
       stringio
@@ -246,10 +264,6 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis (5.0.8)
-      redis-client (>= 0.17.0)
-    redis-client (0.19.1)
-      connection_pool
     regexp_parser (2.9.0)
     reline (0.4.2)
       io-console (~> 0.5)
@@ -280,6 +294,14 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shoulda-matchers (6.1.0)
+      activesupport (>= 5.2.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -335,19 +357,26 @@ DEPENDENCIES
   bootsnap
   bootstrap (~> 5.3.2)
   capybara
+  chartkick (~> 5.0)
   dartsass-sprockets
+  database_cleaner
   debug
   devise
+  factory_bot_rails
+  faker
   font_awesome5_rails
+  groupdate (~> 6.4)
   htmlbeautifier
   importmap-rails
   jbuilder
   jquery-rails
+  pg
   puma (>= 5.0)
   rails (~> 7.1.2)
-  redis (>= 4.0.1)
   rubyXL
   selenium-webdriver
+  shoulda-matchers
+  simplecov
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails

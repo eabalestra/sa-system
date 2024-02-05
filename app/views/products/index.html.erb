@@ -1,7 +1,17 @@
 <h1 class="h3 mb-2 text-gray-800">Productos</h1>
 <div>
-  <%= link_to new_product_path, { remote: true, class: "btn btn-info" }  do %>
+  <%= link_to new_product_path, { remote: true, class: "btn btn-info mb-2 mb-md-0 mr-md-2" }  do %>
     <span class="fas fa-plus-square" ></span>
+  <% end %>
+  <button type="button" class="btn btn-info mb-2 mb-md-0 mr-md-2" data-toggle="modal" data-target="#productSearchModal">
+    <span class="fa fa-search"> </span>
+    Buscar Producto
+  </button>
+  <% if params[:cod] %>
+    <%= link_to products_path, { type:"button", class: 'btn btn-secondary mb-2 mb-md-0 mr-md-2' } do %>
+      <span class="fa fa-arrow-left"></span>
+      Volver atrás
+    <% end %>
   <% end %>
 </div>
 <br />
@@ -17,6 +27,8 @@
             <th>Existencia</th>
             <th>PU Venta</th>
             <th>PU Compra</th>
+            <th>Margen de Ganancia</th>
+            <th>IVA (%)</th>
             <th>Proveedor</th>
             <th>Últ. Actualización Precio</th>
             <th>Últ. Actualización Stock</th>
@@ -31,18 +43,55 @@
               <td><%= prod.existence %></td>
               <td>$<%= prod.selling_unit_price %></td>
               <td>$<%= prod.unit_cost %></td>
+              <td><%= prod.profit_margin * 100 %>%</td>
+              <td><%= prod.iva_amount * 100 %>%</td>
               <td><%= prod.supplier != nil ? prod.supplier.name : "No tiene proveedor" %></td>
               <td><%= prod.last_price_update_date %></td>
               <td><%= prod.last_stock_update_date %></td>
               <td>
-                <%= link_to "Editar", edit_product_path(prod), html_options = {class: "btn btn-info btn-xs", remote: true} %>
-                <%= link_to "Borrar", prod, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{prod.name}?"}, class: "btn btn-danger btn-xs" %>
+                <div class="btn-group" role="group">
+                  <%= link_to edit_purchase_price_product_path(prod),  html_options = {class: "btn btn-warning btn-xs", remote: true} do %>
+                    <i class="fas fa-tags"></i>
+                    Act. PU de Compra
+                  <% end %>
+                  <%= link_to edit_stock_product_path(prod), html_options = {class: "btn btn-info btn-xs", remote: true} do %>
+                    <i class="fas fa-cubes"></i>
+                    Act. Stock
+                  <% end %>
+                  <%= link_to edit_product_path(prod), data: { modal: 'modalProducts' }, class: "btn btn-primary btn-xs", remote: true do %>
+                    <i class="fas fa-edit"></i>
+                    Editar
+                  <% end %>
+                  <%= link_to prod, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{prod.name}?"}, class: "btn btn-danger btn-xs" do%>
+                    <i class="fas fa-trash-alt"></i>
+                    Borrar
+                  <% end %>
+                </div>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item <%= 'disabled' if @products.current_page == 1 %>">
+            <%= link_to 'Atrás', url_for(page: @products.current_page - 1), class: 'page-link' %>
+          </li>
+          <% @products.total_pages.times do |i| %>
+            <li class="page-item <%= 'active' if @products.current_page == i + 1 %>" aria-current="page">
+              <%= link_to i + 1, url_for(page: i + 1), class: 'page-link' %>
+            </li>
+          <% end %>
+          <li class="page-item <%= 'disabled' if @products.current_page == @products.total_pages %>">
+            <%= link_to 'Siguiente', url_for(page: @products.current_page + 1), class: 'page-link' %>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
 <%= render 'modal_productos' %>
+<%= render 'modal_product_search' %>
+<%= render 'modal_update_product_prices' %>
+<%= render 'modal_update_stock' %>
+<%= render 'modal_update_purchase_price' %>

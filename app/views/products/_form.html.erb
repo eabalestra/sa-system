@@ -39,23 +39,33 @@
       <% end %>
     </div>
   </div>
-  <!-- selling_unit_price -->
-  <div class="item form-group<%= @product.errors[:selling_unit_price].any? ? ' has-error has-feedback' : '' %>">
-    <%= f.label :selling_unit_price, "Precio de venta del producto: " %>
+  <!-- unit_cost -->
+  <div class="item form-group<%= @product.errors[:unit_cost].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :unit_cost, "Ingrese el precio de compra unitario del producto: " %>
     <div class="input-group">
-      <%= f.number_field :selling_unit_price, {class: "form-control", :placeholder=>"Introduzca el precio de venta del producto..."} %>
-      <%if @product.errors[:selling_unit_price].any? %>
-        <p class="bg-danger"><%= @product.errors[:selling_unit_price].to_s[/\w([^"]*)/] %></p>
+      <%= f.number_field :unit_cost, step: :any, class: "form-control", placeholder: "Ej: 1000" %>
+      <%if @product.errors[:unit_cost].any? %>
+        <p class="bg-danger"><%= @product.errors[:unit_cost].to_s[/\w([^"]*)/] %></p>
       <% end %>
     </div>
   </div>
-  <!-- unit_cost -->
-  <div class="item form-group<%= @product.errors[:unit_cost].any? ? ' has-error has-feedback' : '' %>">
-    <%= f.label :unit_cost, "Precio de compra del producto: " %>
+  <!-- profit_margin -->
+  <div class="item form-group<%= @product.errors[:profit_margin].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :profit_margin, "Introduzca el margen de ganancia para el producto: " %>
     <div class="input-group">
-      <%= f.number_field :unit_cost, {class: "form-control", :placeholder=>"Introduzca el precio de compra del producto..."} %>
-      <%if @product.errors[:unit_cost].any? %>
-        <p class="bg-danger"><%= @product.errors[:unit_cost].to_s[/\w([^"]*)/] %></p>
+      <%= f.number_field :profit_margin, step: :any, class: "form-control", placeholder: "Ej: 0.40" %>
+      <%if @product.errors[:profit_margin].any? %>
+        <p class="bg-danger"><%= @product.errors[:profit_margin].to_s[/\w([^"]*)/] %></p>
+      <% end %>
+    </div>
+  </div>
+  <!-- iva_amount -->
+  <div class="item form-group<%= @product.errors[:iva_amount].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :iva_amount, "Introduzca el monto del IVA: " %>
+    <div class="input-group">
+      <%= f.number_field :iva_amount, step: :any, class: "form-control", placeholder: "Ej: 0.21" %>
+      <%if @product.errors[:iva_amount].any? %>
+        <p class="bg-danger"><%= @product.errors[:iva_amount].to_s[/\w([^"]*)/] %></p>
       <% end %>
     </div>
   </div>

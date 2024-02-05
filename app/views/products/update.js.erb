@@ -1,4 +1,12 @@
-$('#modalProductos').modal('toggle');
+if ($('#modalProductos').hasClass('show')) {
+$('#modalProductos').modal('hide');
+} 
+if ($('#modalUpdateStock').hasClass('show')) {
+$('#modalUpdateStock').modal('hide');
+} 
+if ($('#modalUpdatePurchasePrice').hasClass('show')) {
+$('#modalUpdatePurchasePrice').modal('hide');
+}
 $('#producto_<%= @product.id %>').replaceWith(`
 <tr id="producto_<%= @product.id %>" >
   <td><%= image_tag @product.image_product, size: "50x50", class: "rounded-circle" if @product.image_product? %></td>
@@ -7,12 +15,31 @@ $('#producto_<%= @product.id %>').replaceWith(`
   <td><%= @product.existence %></td>
   <td>$<%= @product.selling_unit_price %></td>
   <td>$<%= @product.unit_cost %></td>
+  <td><%= @product.profit_margin * 100 %>%</td>
+  <td><%= @product.iva_amount * 100 %>%</td>
   <td><%= @product.supplier != nil ? @product.supplier.name : "No tiene proveedor" %></td>
   <td><%= @product.last_price_update_date %></td>
   <td><%= @product.last_stock_update_date %></td>
   <td>
-    <%= link_to "Editar", edit_product_path(@product), html_options = {class: "btn btn-info btn-xs", remote: true} %>
-    <%= link_to "Borrar", @product, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{@product.name}?"}, class: "btn btn-danger btn-xs" %>
-  </tr>
-  `
-  );
+    <div class="btn-group" role="group">
+      <%= link_to edit_purchase_price_product_path(@product),  html_options = {class: "btn btn-warning btn-xs", remote: true} do %>
+        <i class="fas fa-tags"></i>
+        Act. PU de Compra
+      <% end %>
+      <%= link_to edit_stock_product_path(@product), html_options = {class: "btn btn-info btn-xs", remote: true} do %>
+        <i class="fas fa-cubes"></i>
+        Act. Stock
+      <% end %>
+      <%= link_to edit_product_path(@product), data: { modal: 'modalProducts' }, class: "btn btn-primary btn-xs", remote: true do %>
+        <i class="fas fa-edit"></i>
+        Editar
+      <% end %>
+      <%= link_to @product, remote: true, method: :delete, data: { confirm: "¿Borrar producto: #{@product.name}?"}, class: "btn btn-danger btn-xs" do%>
+        <i class="fas fa-trash-alt"></i>
+        Borrar
+      <% end %>
+    </div>
+  </td>
+</tr>
+`
+);
