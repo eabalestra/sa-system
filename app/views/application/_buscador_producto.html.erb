@@ -12,6 +12,12 @@
           <label for="buscador_productos">Ingresa el nombre del producto</label>
           <input type="text" class="form-control" data-tipo = "<%= tipo %>" data-model = "<%= @model.try(:id) %>" id="buscador_productos" placeholder="Nombre producto...">
         </div>
+        <% if tipo == "purchases" %>
+          <div class="form-group">
+            <label for="unit_cost">Ingresa el precio unitario de compra</label>
+            <input type="number" class="form-control" id="unit_cost" placeholder="Ej: 1000" value="1">
+          </div>
+        <% end %>
         <div class="form-group">
           <label for="cantidad_producto">Ingresa una cantidad</label>
           <input type="number" class="form-control" id="cantidad_producto" placeholder="Ingresa la cantidad a vender..." value="1">

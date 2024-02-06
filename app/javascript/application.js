@@ -92,8 +92,11 @@ window.selectClientButton = function (client_id, sale_id) {
 
 window.selectProduct = function (product_id, model_id, model_type) {
   switch (model_type) {
-    case "sales":
+    case 'sales':
       addItemSales(product_id, model_id);
+      break;
+    case 'purchases':
+      addItemPurchase(product_id, model_id);
       break;
     default:
       break;
@@ -202,6 +205,64 @@ function addItemSales(product_id, sale_id) {
       } else {
         console.error("Error adding item sale:", textStatus, errorThrown);
       }
+    },
+  });
+}
+
+function addItemPurchase(product_id, purchase_id) {
+  if (!product_id || !purchase_id) {
+    console.error("Product ID and Purchase ID are required");
+    return;
+  }
+
+  let initial_quantity = $("#cantidad_producto").val();
+  let unit_cost = $("#unit_cost").val();
+
+  if (!initial_quantity) {
+    console.error("Initial quantity is required");
+    return;
+  }
+
+  let request_url = getRootUrl() + "/add_item_purchase/";
+
+  let info = {
+    product_id: product_id,
+    id: purchase_id,
+    quantity: initial_quantity,
+    unit_cost: unit_cost,
+  };
+
+  $.ajax({
+    url: request_url,
+    type: "POST",
+    data: JSON.stringify(info),
+    contentType: "application/json; charset=utf-8",
+    headers: {
+      "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content"),
+    },
+    success: function (result) {
+      if (result) {
+        $("#buscador_producto").modal("hide");
+        $("body").removeClass("modal-open");
+        $(".modal-backdrop").remove();
+        let quantity = result.quantity;
+        let price_at_purchase = result.price_at_purchase;
+        let amount_item = result.amount_item;
+        let amount_purchase = result.amount_purchase;
+        let name = result.name;
+        let newRowContent = `<tr>
+        <td>${name}</td>
+        <td>${price_at_purchase}</td>
+        <td>${quantity}</td>
+        <td>$ ${amount_item}</td>
+        </tr>`;
+
+        $("#tabla_compras tbody").append(newRowContent);
+        $("#importe_compra_lbl").text("Importe: $" + amount_purchase);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error("Error adding item purchase:", textStatus, errorThrown);
     },
   });
 }

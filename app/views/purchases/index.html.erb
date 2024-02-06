@@ -1,0 +1,62 @@
+<div class="d-flex flex-column flex-md-row justify-content-start">
+  <%= link_to new_purchase_path, {class: "btn btn-info mb-2 mb-md-0 mr-md-2", id: "crear-venta-btn"}  do %>
+    <span class="fas fa-plus-square"> </span>
+    Registrar compra
+  <%end%>
+  <button type="button" class="btn btn-info mb-2 mb-md-0 mr-md-2" data-toggle="modal" data-target="#">
+    <span class="fa fa-search"> </span>
+    Buscar compra
+  </button>
+  <% if params[:id] %>
+    <%= link_to purchase_path, { type:"button", class: 'btn btn-secondary mb-2 mb-md-0 mr-md-2' } do %>
+      <span class="fa fa-arrow-left"></span>
+      Volver atrás
+    <% end %>
+  <% end %>
+</div>
+<br />
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="tabla_ventas" width="60%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Registrada por</th>
+            <th>Proveedor</th>
+            <th>Importe</th>
+            <th>ESTADO</th>
+            <th>Acciones: </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @purchases.empty? %>
+            <tr>
+              <td> No hay compras </td>
+            </tr>
+          <% else %>
+            <% @purchases.each do |purchase| %>
+              <tr id="purchase_<%= purchase.id %>">
+                <td> <%= purchase.id %> </td>
+                <td> <%= purchase.user.email %> </td>
+                <td> <%= purchase.try(:supplier).try(:name) %> </td>
+                <td> <%= purchase.total_amount %> </td>
+                <td>
+                </td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <%= link_to purchase_path(purchase), method: :delete, data: { confirm: '¿Eliminar la venta?' }, class: "btn btn-danger mb-2 mb-md-0 mr-md-2" do %>
+                      <i class="fas fa-trash-alt"></i>
+                      Borrar
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+      <%= render partial: 'shared/pagination', locals: { modulo: @purchases } %>
+    </div>
+  </div>
+</div>

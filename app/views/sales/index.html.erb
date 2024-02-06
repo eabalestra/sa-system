@@ -52,7 +52,7 @@
                   <% elsif venta.partially_paid? %>
                     <div class="alert alert-warning" role="alert">
                       <i class="fas fa-clock"></i>
-                      PARCIALMENTE COBRADA, FALTA: $<%= venta.total_amount - venta.paid_amount() %>
+                      PARCIALMENTE COBRADA, FALTA: $<%= (venta.total_amount.to_d - venta.paid_amount().to_d) %>
                     </div>
                   <% else %>
                     <div class="alert alert-danger" role="alert">
@@ -94,21 +94,7 @@
           <% end %>
         </tbody>
       </table>
-      <nav aria-label="...">
-        <ul class="pagination">
-          <li class="page-item <%= 'disabled' if @sales.current_page == 1 %>">
-            <%= link_to 'Atrás', url_for(page: @sales.current_page - 1), class: 'page-link' %>
-          </li>
-          <% @sales.total_pages.times do |i| %>
-            <li class="page-item <%= 'active' if @sales.current_page == i + 1 %>" aria-current="page">
-              <%= link_to i + 1, url_for(page: i + 1), class: 'page-link' %>
-            </li>
-          <% end %>
-          <li class="page-item <%= 'disabled' if @sales.current_page == @sales.total_pages %>">
-            <%= link_to 'Siguiente', url_for(page: @sales.current_page + 1), class: 'page-link' %>
-          </li>
-        </ul>
-      </nav>
+      <%= render partial: 'shared/pagination', locals: { modulo: @sales } %>
     </div>
   </div>
 </div>
