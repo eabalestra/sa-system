@@ -44,22 +44,7 @@
                 <td> <%= venta.try(:client).try(:name) %> </td>
                 <td> <%= venta.total_amount %> </td>
                 <td>
-                  <% if venta.paid? %>
-                    <div class="alert alert-success" role="alert">
-                      <i class="fas fa-check"></i>
-                      COBRADA
-                    </div>
-                  <% elsif venta.partially_paid? %>
-                    <div class="alert alert-warning" role="alert">
-                      <i class="fas fa-clock"></i>
-                      PARCIALMENTE COBRADA, FALTA: $<%= (venta.total_amount.to_d - venta.paid_amount().to_d) %>
-                    </div>
-                  <% else %>
-                    <div class="alert alert-danger" role="alert">
-                      <i class="fas fa-exclamation-triangle"></i>
-                      PENDIENTE DE COBRO
-                    </div>
-                  <% end %>
+                  <%= render partial: 'shared/payment_status', locals: { type: venta } %>
                 </td>
                 <td>
                   <div class="btn-group" role="group">

@@ -1,6 +1,6 @@
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Registro de montos recibidos como pago por la venta N°<%= @sale.id %></h1>
-<%= link_to sales_path, { type:"button", class: 'btn btn-secondary mb-2 mb-md-0 mr-md-2' } do %>
+<h1 class="h3 mb-2 text-gray-800">Registro de montos entregados como pago por la compra N°<%= @purchase.id %></h1>
+<%= link_to purchases_path, { type:"button", class: 'btn btn-secondary mb-2 mb-md-0 mr-md-2' } do %>
   <span class="fa fa-arrow-left"></span>
   Volver atrás
 <% end %>
@@ -18,14 +18,14 @@
           </tr>
         </thead>
         <tbody>
-          <% if @sale.sale_payments.empty? %>
+          <% if @purchase.purchase_payments.empty? %>
             <tr>
               <td> No hay pagos registrados </td>
               <td></td>
               <td></td>
             </tr>
           <% else %>
-            <% @sale.sale_payments.each do |payment| %>
+            <% @purchase.purchase_payments.each do |payment| %>
               <tr id="pago_<%= payment.id %>">
                 <td> <%= payment.id %> </td>
                 <td> $<%= payment.amount %> </td>

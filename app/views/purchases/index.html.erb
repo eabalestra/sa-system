@@ -42,10 +42,27 @@
                 <td> <%= purchase.try(:supplier).try(:name) %> </td>
                 <td> <%= purchase.total_amount %> </td>
                 <td>
+                  <%= render partial: 'shared/payment_status', locals: { type: purchase } %>
                 </td>
                 <td>
                   <div class="btn-group" role="group">
-                    <%= link_to purchase_path(purchase), method: :delete, data: { confirm: '¿Eliminar la venta?' }, class: "btn btn-danger mb-2 mb-md-0 mr-md-2" do %>
+                    <% if not purchase.paid? %>
+                      <%= link_to new_purchase_purchase_payment_path(purchase), { remote: true, class: "btn btn-warning mb-2 mb-md-0 mr-md-2", id: "anadir-sale-payments-btn" }  do %>
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        Registrar Pago
+                      <% end %>
+                    <% end %>
+                    <% if not purchase.unpaid? %>
+                      <%= link_to purchase_purchase_payments_path(purchase), { class: 'btn btn-dark mb-2 mb-md-0 mr-md-2' } do %>
+                        <i class="fas fa-receipt"></i>
+                        Ver Pagos
+                      <% end %>
+                    <% end %>
+                    <%= link_to purchase_path(purchase), {class: "btn btn-info mb-2 mb-md-0 mr-md-2", remote: true} do%>
+                      <i class="fas fa-info-circle"></i>
+                      Detalles
+                    <% end %>
+                    <%= link_to purchase_path(purchase), method: :delete, data: { confirm: '¿Eliminar la compra?' }, class: "btn btn-danger mb-2 mb-md-0 mr-md-2" do %>
                       <i class="fas fa-trash-alt"></i>
                       Borrar
                     <% end %>
@@ -60,3 +77,6 @@
     </div>
   </div>
 </div>
+<%= render 'modal_purchases' %>
+<%= render 'purchase_payments/modal_purchase_payments' %>
+<%= render '' %>

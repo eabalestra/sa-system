@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :purchases, except: %i[show, update] do
+    resources :purchase_payments, controller: 'purchase_payments'
   end
 
   get 'product_finder/:term', to: 'products#finder'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_05_182759) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_06_142614) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -76,6 +76,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_182759) do
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_purchase_details_on_product_id"
     t.index ["purchase_id"], name: "index_purchase_details_on_purchase_id"
+  end
+
+  create_table "purchase_payments", force: :cascade do |t|
+    t.integer "purchase_id", null: false
+    t.decimal "amount"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["purchase_id"], name: "index_purchase_payments_on_purchase_id"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -149,6 +158,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_182759) do
   add_foreign_key "products", "suppliers"
   add_foreign_key "purchase_details", "products"
   add_foreign_key "purchase_details", "purchases"
+  add_foreign_key "purchase_payments", "purchases"
   add_foreign_key "purchases", "suppliers"
   add_foreign_key "purchases", "users"
   add_foreign_key "sale_details", "products"
