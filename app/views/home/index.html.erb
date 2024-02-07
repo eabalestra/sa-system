@@ -1,89 +1,121 @@
 <div class="container-fluid">
-  <!-- Content Row (Cards) -->
   <div class="row">
-    <!-- Pending Money Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-danger shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                Dinero pendiente de cobro
-              </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">
-                $<%= @money_outstanding %>
-              </div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Tasks -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-info shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tareas (Pendientes)
-              </div>
-              <div class="row no-gutters align-items-center">
-                <div class="col-auto">
-                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+    Dinero disponible
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Pending Money Card Example -->
+      <div class="row-xl-3 row-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                  Dinero pendiente de cobro
                 </div>
-                <div class="col">
-                  <div class="progress progress-sm mr-2">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-                  </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  $<%= @money_outstanding %>
                 </div>
               </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
             </div>
-            <div class="col-auto">
-              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="row-xl-3 row-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Ganancias (Mensuales)</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= @monthly_earnings %></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar-day fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Earnings (Annual) Card Example -->
+      <div class="row-xl-3 row-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                  Ganancias (Anuales)</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= @annual_earnings %></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                Ganancias (Mensuales)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= @monthly_earnings %></div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+    <div class="col">
+      <!-- Pending Money card to pay-->
+      <div class="row-xl-3 row-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                  Dinero pendiente de pago a proveedores
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  $<%= @money_outstading_to_pay %>
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Earnings (Annual) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-success shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                Ganancias (Anuales)</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= @annual_earnings %></div>
+      <!-- Earnings (Monthly) Card Example -->
+      <div class="row-xl-3 col-row-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Gastos (Mensuales)</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= @monthly_costs %></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar-day fa-2x text-gray-300"></i>
+              </div>
             </div>
-            <div class="col-auto">
-              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+      <!-- Earnings (Annual) Card Example -->
+      <div class="row-xl-3 row-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                  Gastos (Anuales)</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">$<%= @annual_costs %></div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- ./content-row (cards) -->
   <!-- Content Row CHARTS -->
   <div class="row">
     <!-- Area Chart -->
@@ -109,7 +141,7 @@
         <div class="card-body">
           <div class="chart-area">
             <div class="chart-pie pt-4 pb-2">
-              <%= line_chart Sale.group_by_day(:created_at).count, points: false, loading: "Cargando gráfico..." %>
+              <%= line_chart Sale.group_by_day(:created_at).count, points: false %>
             </div>
           </div>
         </div>
