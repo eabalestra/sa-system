@@ -65,6 +65,8 @@ gem 'will_paginate', '~> 4.0'
 gem "chartkick", "~> 5.0"
 gem "groupdate", "~> 6.4"
 
+gem 'libreconv'
+
 group :production do
   # Database adapter for PostgreSQL
   gem 'pg'
@@ -76,6 +78,7 @@ group :development, :test do
 
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.4'
+  gem "rspec-rails", "~> 6.1"
 end
 
 group :development do
@@ -90,7 +93,6 @@ group :development do
 
   gem 'htmlbeautifier'
 
-  gem "rspec-rails", "~> 6.1"
 end
 
 group :test do
@@ -101,7 +103,7 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'faker'
-  gem "rspec-rails", "~> 6.1", :require => false
+
   gem "simplecov", "~> 0.22.0", :require => false
   gem "simplecov_json_formatter", "~> 0.1.4", :group => :test, :require => false
 end

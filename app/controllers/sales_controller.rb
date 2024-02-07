@@ -1,3 +1,5 @@
+require 'libreconv'
+
 class SalesController < ApplicationController
   before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :receipt]
 
@@ -114,10 +116,15 @@ class SalesController < ApplicationController
 
   # GET /sales/:id/receipt
   def receipt
-    sale = Sale.find(params[:id])
-    xlsx = Sale.generate_doc(sale)
+    xlsx_content = Sale.generate_doc(@sale)
+    xlsx_path = "/tmp/comprobante-de-venta-#{@sale.id}-descartables-sa.xlsx"
+    File.open(xlsx_path, 'wb') { |f| f.write(xlsx_content) }
 
-    send_data xlsx, filename: "comprobante-de-venta-#{sale.id}-descartables-sa.xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', disposition: 'attachment'
+    pdf_path = "/tmp/comprobante-de-venta-#{@sale.id}-descartables-sa.pdf"
+    Libreconv.convert(xlsx_path, pdf_path)
+
+    pdf = File.read(pdf_path)
+    send_data pdf, filename: "comprobante-de-venta-#{@sale.id}-descartables-sa.pdf", type: 'application/pdf', disposition: 'attachment'
   end
 
   private

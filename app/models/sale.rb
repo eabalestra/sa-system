@@ -49,20 +49,20 @@ class Sale < ApplicationRecord
     if sale.client.nil?
       worksheet[10][1].change_contents("Consumidor final")
     else
-      worksheet[10][1].change_contents("#{sale.client.name}")
-      worksheet[10][5].change_contents("#{sale.client.phone}")
-      worksheet[12][1].change_contents("#{sale.client.dir}")
+      worksheet[10][1].change_contents(sale.client.name)
+      worksheet[10][5].change_contents(sale.client.phone)
+      worksheet[12][1].change_contents(sale.client.dir)
     end
 
     # ID of the sale
-    worksheet[6][6].change_contents("#{sale.id}")
+    worksheet[6][6].change_contents(sale.id.to_s)
     # Date of the sale
-    worksheet[4][6].change_contents("#{sale.created_at.strftime('%d/%m/%Y')}")
+    worksheet[4][6].change_contents(sale.created_at.strftime('%d/%m/%Y'))
 
     current_row = 18
     discount_rows = []
 
-    sale.sale_details.each do |detail|
+    sale.sale_details.find_each do |detail|
       total_amount = detail.product.selling_unit_price * detail.quantity
       worksheet.insert_row(16)
       worksheet.add_cell(16, 1, detail.product.name)
@@ -91,13 +91,11 @@ class Sale < ApplicationRecord
 
     worksheet[current_row][6].change_contents("$#{sale.total_amount}")
 
-    temp_file = Tempfile.new(["receipt", ".xlsx"])
-    workbook.write(temp_file.path)
-    xlsx_data = File.read(temp_file.path)
-    temp_file.close
-    temp_file.unlink
-
-    xlsx_data
+    Tempfile.create(["receipt", ".xlsx"]) do |temp_file|
+      workbook.write(temp_file.path)
+      xlsx_data = File.read(temp_file.path)
+      xlsx_data
+    end
   end
 
 

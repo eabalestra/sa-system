@@ -21,23 +21,29 @@
   </div>
 </form>
 <br>
-<table class="table table-dark">
-  <thead>
-    <tr>
-      <th>Producto</th>
-      <th>Cantidad</th>
-      <th>Precio</th>
-      <th>Importe</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @sale.sale_details.each do |detalle| %>
+<div class="table-responsive">
+  <table class="table table-dark">
+    <thead>
       <tr>
-        <td><%= detalle.product.name %></td>
-        <td><%= detalle.quantity %></td>
-        <td><%= detalle.price_at_sale %></td>
-        <td><%= detalle.price_at_sale * detalle.quantity %></td>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Importe</th>
+        <th>Descuento</th>
+        <th>Importe con descuento</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @sale.sale_details.each do |detalle| %>
+        <tr>
+          <td><%= detalle.product.name %></td>
+          <td><%= detalle.quantity %></td>
+          <td><%= detalle.price_at_sale %></td>
+          <td><%= detalle.price_at_sale * detalle.quantity %></td>
+          <td><%= detalle.discount * 100 %>%</td>
+          <td><%= (detalle.price_at_sale * detalle.quantity) - ((detalle.price_at_sale * detalle.quantity) * detalle.discount) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
