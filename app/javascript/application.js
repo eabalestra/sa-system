@@ -38,13 +38,13 @@ document.addEventListener("turbo:load", function () {
             let existence = data[x].existence;
             let id = data[x].id;
             let newRowContent = `<tr>
-                                  <td>${name}</td>
-                                  <td>${existence}</td>
-                                  <td><button type="button" class="btn btn-primary" onclick="selectProductButton(${id}, ${id_model}, '${model_type}')">
-                                  Agregar
-                                  </button>
-                                  </td>
-                                  </tr>`;
+            <td>${name}</td>
+            <td>${existence}</td>
+            <td><button type="button" class="btn btn-primary" onclick="getDiscountAndSelectProduct(${id}, ${id_model}, '${model_type}')">
+            Agregar
+            </button>
+            </td>
+            </tr>`;
             $("#tabla_buscador tbody").append(newRowContent);
           }
         }
@@ -119,6 +119,11 @@ document.addEventListener("turbo:load", function () {
   });
 });
 
+window.getDiscountAndSelectProduct = function(id, id_model, model_type) {
+  let discount = $("#discount").val();
+  selectProductButton(id, id_model, model_type, discount);
+}
+
 window.selectClientButton = function (client_id, sale_id) {
   selectClient(client_id, sale_id);
 };
@@ -127,12 +132,12 @@ window.selectSupplierButton = function (supplier_id, purchase_id) {
   addSupplierPurchase(supplier_id, purchase_id);
 };
 
-window.selectProduct = function (product_id, model_id, model_type) {
+window.selectProduct = function (product_id, model_id, model_type, discount) {
   switch (model_type) {
-    case 'sales':
-      addItemSales(product_id, model_id);
+    case "sales":
+      addItemSales(product_id, model_id, discount);
       break;
-    case 'purchases':
+    case "purchases":
       addItemPurchase(product_id, model_id);
       break;
     default:
@@ -140,8 +145,8 @@ window.selectProduct = function (product_id, model_id, model_type) {
   }
 };
 
-window.selectProductButton = function (id, id_model, model_type) {
-  selectProduct(id, id_model, model_type);
+window.selectProductButton = function (id, id_model, model_type, discount) {
+  selectProduct(id, id_model, model_type, discount);
   if ($("#no-product-row").length) {
     $("#no-product-row").remove();
   }
@@ -227,7 +232,7 @@ function selectClient(client_id, sale_id) {
   });
 }
 
-function addItemSales(product_id, sale_id) {
+function addItemSales(product_id, sale_id, discount) {
   if (!product_id || !sale_id) {
     console.error("Product ID and Sale ID are required");
     return;
@@ -245,6 +250,7 @@ function addItemSales(product_id, sale_id) {
     product_id: product_id,
     id: sale_id,
     quantity: initial_quantity,
+    discount: discount,
   };
 
   $.ajax({
@@ -265,11 +271,15 @@ function addItemSales(product_id, sale_id) {
         let amount_item = result.amount_item;
         let amount_sale = result.amount_sale;
         let name = result.name;
+        let discount = result.discount;
+        let amount_item_after_discount = amount_item - (amount_item * discount);
         let newRowContent = `<tr>
         <td>${name}</td>
         <td>${price}</td>
         <td>${quantity}</td>
         <td>$ ${amount_item}</td>
+        <td>${(discount*100).toFixed(2)}%</td>
+        <td>$ ${amount_item_after_discount} </td>
         </tr>`;
 
         $("#tabla_ventas tbody").append(newRowContent);

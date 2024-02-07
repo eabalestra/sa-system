@@ -20,8 +20,18 @@
         <% end %>
         <div class="form-group">
           <label for="cantidad_producto">Ingresa una cantidad</label>
-          <input type="number" class="form-control" id="cantidad_producto" placeholder="Ingresa la cantidad comprada...">
+          <% if tipo == "purchases" %>
+            <input type="number" class="form-control" id="cantidad_producto" placeholder="Ingresa la cantidad comprada...">
+          <% else %>
+            <input type="number" class="form-control" id="cantidad_producto" placeholder="Ingresa la cantidad vendida...">
+          <% end %>
         </div>
+        <% if tipo == "sales" %>
+          <div class="form-group">
+            <label for="discount"> Ingresa el descuento para este producto </label>
+            <input type="number" class="form-control" id="discount" placeholder="(por ejemplo, ingresa 0.10 por un 10% de descuento).">
+          </div>
+        <% end %>
         <table class="table table-dark" id="tabla_buscador" >
           <thead>
             <tr>

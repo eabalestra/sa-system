@@ -103,6 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_142614) do
     t.integer "product_id", null: false
     t.integer "sale_id", null: false
     t.decimal "price_at_sale"
+    t.decimal "discount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_sale_details_on_product_id"
