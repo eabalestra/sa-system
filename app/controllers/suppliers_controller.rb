@@ -48,6 +48,19 @@ class SuppliersController < ApplicationController
     end
   end
 
+  def finder
+    @results = Supplier.finder(params[:term]).map do |supplier|
+      {
+          id: supplier.id,
+          name: supplier.name
+      }
+    end
+
+    respond_to do |format|
+      format.json { render :json => @results }
+    end
+  end
+
   private
 
   def set_supplier

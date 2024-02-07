@@ -86,8 +86,45 @@ document.addEventListener("turbo:load", function () {
   });
 });
 
+document.addEventListener("turbo:load", function () {
+  $("#buscador_proveedores").on("input", function (event) {
+    let term = $(this).val();
+    let purchase_id = $(this).data("purchase");
+
+    if (term.length == 0) {
+      $("#tabla_buscador_proveedores tbody").empty();
+    } else {
+      let request_url = getRootUrl() + "/supplier_finder/" + term;
+
+      $.get(request_url, function (data, status) {
+        if (data.length > 0) {
+          $("#tabla_buscador_proveedores tbody").empty();
+          for (let x in data) {
+            let name = data[x].name;
+            let supplier_id = data[x].id;
+            let rowContent = `<tr>
+                              <td>${name}</td>
+                              <td> <button type="button" class="btn btn-primary" onclick="selectSupplierButton(${supplier_id}, ${purchase_id})"> 
+                              Agregar
+                              </button>
+                              </td>
+                              </tr>`;
+            $("#tabla_buscador_proveedores tbody").append(rowContent);
+          }
+        }
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("Error adding supplier:", textStatus, errorThrown);
+      });
+    }
+  });
+});
+
 window.selectClientButton = function (client_id, sale_id) {
   selectClient(client_id, sale_id);
+};
+
+window.selectSupplierButton = function (supplier_id, purchase_id) {
+  addSupplierPurchase(supplier_id, purchase_id);
 };
 
 window.selectProduct = function (product_id, model_id, model_type) {
@@ -109,6 +146,46 @@ window.selectProductButton = function (id, id_model, model_type) {
     $("#no-product-row").remove();
   }
 };
+
+function addSupplierPurchase(supplier_id, purchase_id) {
+  if (!supplier_id) {
+    console.error("Supplier ID are required");
+    return;
+  }
+  if (!purchase_id) {
+    console.error("Purchase ID are required");
+    return;
+  }
+
+  let request_url = getRootUrl() + "/add_supplier_purchase/";
+
+  let info = {
+    supplier_id: supplier_id,
+    id: purchase_id,
+  };
+
+  $.ajax({
+    url: request_url,
+    type: "POST",
+    data: JSON.stringify(info),
+    contentType: "application/json; charset=utf-8",
+    headers: {
+      "X-CSRF-Token": $('meta[name="csrf-token"]').attr("content"),
+    },
+    success: function (result) {
+      if (result) {
+        $("#buscador_proveedor").modal("hide");
+        $("body").removeClass("modal-open");
+        $(".modal-backdrop").remove();
+        let nombre_proveedor = result.supplier_name;
+        $("#proveedor_compra").html("Proveedor: " + nombre_proveedor);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error("Error adding supplier purchase:", textStatus, errorThrown);
+    },
+  });
+}
 
 function selectClient(client_id, sale_id) {
   if (!client_id) {
