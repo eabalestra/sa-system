@@ -32,7 +32,7 @@
                 <td><%= transaction.user.email %></td>
                 <td><%= transaction.created_at.in_time_zone('Buenos Aires').strftime('%d/%m/%Y %H:%M') %></td>
                 <% if transaction.sale_payment? || transaction.income? %>
-                  <td><%= transaction.amount %></td>
+                  <td>+ $<%= transaction.amount %></td>
                   <td>
                     <span class="badge badge-pill badge-soft-success font-size-14">
                       <% if transaction.sale_payment? %>
@@ -43,7 +43,7 @@
                     </span>
                   </td>
                 <% else %>
-                  <td><%= transaction.amount * -1 %></td>
+                  <td>- $<%=transaction.amount%></td>
                   <td>
                     <span class="badge badge-pill badge-soft-danger font-size-14">
                       <% if transaction.purchase_payment? %>
