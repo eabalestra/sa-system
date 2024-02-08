@@ -8,6 +8,6 @@
       <% end %>
     </div>
   </div>
-  <%= f.submit "Registrar Pago", class: "btn btn-primary" %>
+  <%= f.submit "Registrar Pago", class: "btn btn-primary", data: { confirm: '¿Estás seguro? Los cambios son irreversibles debido a que se generará una transacción.' } %>
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 <% end %>
