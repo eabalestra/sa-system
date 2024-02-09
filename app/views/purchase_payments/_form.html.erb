@@ -3,8 +3,12 @@
     <%= f.label :amount, "Monto recibido: " %>
     <div class="input-group">
       <%= f.number_field :amount, {class: "form-control", placeholder: "Introduzca el monto entregado como pago por la compra...", step: :any} %>
-      <%if @payment.errors[:amount].any? %>
-        <p class="bg-danger"><%= @payment.errors[:amount].to_s[/\w([^"]*)/] %></p>
+      <% if @payment.errors[:base].any? %>
+        <div class="alert alert-danger p-2 text-sm mb-0 py-2">
+          <% @payment.errors[:base].each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

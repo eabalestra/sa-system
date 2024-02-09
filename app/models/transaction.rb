@@ -8,17 +8,33 @@ class Transaction < ApplicationRecord
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validates :user_id, presence: true
   validates :transaction_type, presence: true
+  validate :check_balance
 
-  before_save :update_balance
+  after_commit :update_balance
 
   private
 
+  def check_balance
+    balance = Balance.last || Balance.create!(amount: 0)
+
+    if self.purchase_payment? or self.outgoing?
+      errors.add(:amount, "El monto de la transacción supera el saldo disponible en su cuenta.") if self.amount > balance.amount
+    end
+  end
+
   def update_balance
     balance = Balance.last || Balance.create!(amount: 0)
-    if self.sale_payment? || self.income?
+
+    if self.sale_payment?
       balance.amount += self.sale_payment.amount
-    elsif self.purchase_payment? || self.outgoing?
+    elsif self.income?
+      balance.amount += self.amount
+    elsif self.purchase_payment?
       balance.amount -= self.purchase_payment.amount
+    elsif self.outgoing?
+      balance.amount -= self.amount
+    else
+      raise "Invalid transaction type"
     end
     balance.save
     self.balance_id = balance.id

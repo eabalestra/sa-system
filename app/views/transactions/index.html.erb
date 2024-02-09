@@ -1,9 +1,15 @@
 <%= stylesheet_link_tag 'transactions' %>
+<h2 class="card-title m-2 font-weight-bold">Transacciones</h2>
 <div class="card shadow mb-4">
   <div class="card-body">
-    <h4 class="card-title mb-4">Transacciones</h4>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <%= link_to new_transaction_path, { remote: true, class: "btn btn-info float-left", id: "crear-transaction-btn"}  do %>
+        <span class="fas fa-plus-square"> </span>
+        Registrar transacción
+      <%end%>
+    </div>
     <div class="table-responsive">
-      <table class="table">
+      <table class="table" id="tablaTransactions">
         <thead class="table-light">
           <tr>
             <th scope="col">ID</th>
@@ -63,3 +69,4 @@
     </div>
   </div>
 </div>
+<%= render 'modal_transactions' %>

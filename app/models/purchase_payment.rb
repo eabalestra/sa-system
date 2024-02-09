@@ -13,7 +13,7 @@ class PurchasePayment < ApplicationRecord
   private
 
   def register_payment_transaction
-    transaction = Transaction.create!(
+    transaction = Transaction.new(
       amount: self.amount,
       description: "Pago a proveedor#{
         if self.purchase.supplier.present?
@@ -26,8 +26,13 @@ class PurchasePayment < ApplicationRecord
       purchase_payment: self,
       user: self.purchase.user,
     )
-    if transaction.errors.any?
-      errors.add(:base, "Error creating transaction: #{transaction.errors.full_messages.join(', ')}")
+
+    if transaction.valid?
+      transaction.save
+    else
+      transaction.errors.full_messages.each do |message|
+        errors.add(:base, message)
+      end
       raise ActiveRecord::Rollback
     end
   end
@@ -35,10 +40,10 @@ class PurchasePayment < ApplicationRecord
   def amount_not_greater_than_total_purchase
     if self.amount.present? && self.purchase.present?
       if self.amount > self.purchase.pending_amount()
-        errors.add(:amount, "can't be greater than pending purchase amount")
+        errors.add(:base, "El monto ingresado no puede ser mayor al monto pendiente de la compra.")
       end
       if self.amount > self.purchase.total_amount
-        errors.add(:amount, "can't be greater than total purchase amount")
+        errors.add(:base, "El monto ingresado no puede ser mayor al monto total de la compra.")
       end
     end
   end

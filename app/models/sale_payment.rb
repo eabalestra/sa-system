@@ -13,7 +13,7 @@ class SalePayment < ApplicationRecord
   private
 
   def register_payment_transaction
-    transaction = Transaction.create!(
+    transaction = Transaction.new(
       amount: self.amount,
       description: "Cobro a cliente#{
         if self.sale.client.present?
@@ -26,8 +26,13 @@ class SalePayment < ApplicationRecord
       sale_payment: self,
       user: self.sale.user,
     )
-    if transaction.errors.any?
-      errors.add(:base, "Error creating transaction: #{transaction.errors.full_messages.join(', ')}")
+
+    if transaction.valid?
+      transaction.save notice: "Payment transaction was successfully created."
+    else
+      transaction.errors.full_messages.each do |message|
+        errors.add(:base, message)
+      end
       raise ActiveRecord::Rollback
     end
   end
@@ -35,10 +40,10 @@ class SalePayment < ApplicationRecord
   def amount_not_greater_than_total_sale
     if amount.present? && sale.present?
       if amount > sale.total_amount
-        errors.add(:amount, "can't be greater than total sale amount")
+        errors.add(:amount, "El monto ingresado no puede ser mayor al monto total de la venta.")
       end
       if amount > sale.pending_amount
-        errors.add(:amount, "can't be greater than pending sale amount")
+        errors.add(:amount, "El monto ingresado no puede ser mayor al monto pendiente de la venta.")
       end
     end
   end
