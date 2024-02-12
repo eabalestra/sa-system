@@ -13,6 +13,6 @@ class HomeController < ApplicationController
     @money_outstanding = Sale.unpaid.sum(:total_amount) + Sale.partially_paid.sum(:total_amount) - Sale.partially_paid.joins(:sale_payments).sum('sale_payments.amount')
     @money_outstading_to_pay = Purchase.unpaid.sum(:total_amount) + Purchase.partially_paid.sum(:total_amount) - Purchase.partially_paid.joins(:purchase_payments).sum('purchase_payments.amount')
 
-    @balance = Balance.last || Balance.new
+    @balance = Balance.last || Balance.new(amount: 0)
   end
 end
