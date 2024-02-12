@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_06_142614) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_08_114214) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_142614) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "balances", force: :cascade do |t|
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "clients", force: :cascade do |t|
@@ -141,6 +147,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_142614) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.decimal "amount"
+    t.string "description"
+    t.integer "transaction_type"
+    t.integer "sale_payments_id"
+    t.integer "purchase_payments_id"
+    t.integer "user_id", null: false
+    t.integer "balance_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["balance_id"], name: "index_transactions_on_balance_id"
+    t.index ["purchase_payments_id"], name: "index_transactions_on_purchase_payments_id"
+    t.index ["sale_payments_id"], name: "index_transactions_on_sale_payments_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -167,4 +189,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_142614) do
   add_foreign_key "sale_payments", "sales"
   add_foreign_key "sales", "clients"
   add_foreign_key "sales", "users"
+  add_foreign_key "transactions", "balances"
+  add_foreign_key "transactions", "purchase_payments", column: "purchase_payments_id"
+  add_foreign_key "transactions", "sale_payments", column: "sale_payments_id"
+  add_foreign_key "transactions", "users"
 end

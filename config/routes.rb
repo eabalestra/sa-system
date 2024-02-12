@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     resources :purchase_payments, controller: 'purchase_payments'
   end
 
+  resources :transactions, except: %i[show, update]
+
   get 'product_finder/:term', to: 'products#finder'
   post '/add_item_sale', to: 'sales#add_item'
   post '/add_item_purchase', to: 'purchases#add_item'
