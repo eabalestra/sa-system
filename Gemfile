@@ -69,7 +69,7 @@ gem 'libreconv'
 
 group :production do
   # Database adapter for PostgreSQL
-  gem 'pg'
+  gem 'pg', '~> 1.2.3'
 end
 
 group :development, :test do
