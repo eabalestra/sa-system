@@ -1,0 +1,17 @@
+<%= form_for [@purchase, @payment], url: purchase_purchase_payments_path(@purchase), remote: true, multiple: true do |f| %>
+  <div class="item form-group<%= @payment.errors[:amount].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :amount, "Monto recibido: " %>
+    <div class="input-group">
+      <%= f.number_field :amount, {class: "form-control", placeholder: "Introduzca el monto entregado como pago por la compra...", step: :any} %>
+      <% if @payment.errors[:base].any? %>
+        <div class="alert alert-danger p-2 text-sm mb-0 py-2">
+          <% @payment.errors[:base].each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= f.submit "Registrar Pago", class: "btn btn-primary", data: { confirm: '¿Estás seguro? Los cambios son irreversibles debido a que se generará una transacción.' } %>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<% end %>

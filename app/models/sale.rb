@@ -49,31 +49,53 @@ class Sale < ApplicationRecord
     if sale.client.nil?
       worksheet[10][1].change_contents("Consumidor final")
     else
-      worksheet[10][1].change_contents("#{sale.client.name}")
+      worksheet[10][1].change_contents(sale.client.name)
+      worksheet[10][5].change_contents(sale.client.phone)
+      worksheet[12][1].change_contents(sale.client.dir)
     end
+
     # ID of the sale
-    worksheet[6][6].change_contents("#{sale.id}")
+    worksheet[6][6].change_contents(sale.id.to_s)
     # Date of the sale
-    worksheet[4][6].change_contents("#{sale.created_at.strftime('%d/%m/%Y')}")
+    worksheet[4][6].change_contents(sale.created_at.strftime('%d/%m/%Y'))
 
     current_row = 18
-    sale.sale_details.each do |detail|
+    discount_rows = []
+
+    sale.sale_details.find_each do |detail|
+      total_amount = detail.product.selling_unit_price * detail.quantity
       worksheet.insert_row(16)
       worksheet.add_cell(16, 1, detail.product.name)
       worksheet.add_cell(16, 4, detail.quantity)
-      worksheet.add_cell(16, 5, detail.product.selling_unit_price)
-      worksheet.add_cell(16, 6, detail.product.selling_unit_price * detail.quantity)
+      worksheet.add_cell(16, 5, "$#{detail.product.selling_unit_price}")
+      worksheet.add_cell(16, 6, "$#{total_amount}")
+
+      worksheet.sheet_data[16][5].change_horizontal_alignment('right')
+      worksheet.sheet_data[16][6].change_horizontal_alignment('right')
+
+      if detail.discount > 0
+        discount_rows << { row: current_row, name: detail.product.name, amount: total_amount * detail.discount }
+      end
+
       current_row += 1
     end
+
+    discount_rows.each do |discount|
+      worksheet.insert_row(discount[:row])
+      worksheet.add_cell(discount[:row], 1, "DESCUENTO por "+discount[:name])
+      worksheet.add_cell(discount[:row], 6, "-$#{discount[:amount]}")
+      worksheet.sheet_data[discount[:row]][6].change_horizontal_alignment('right')
+
+      current_row += 1
+    end
+
     worksheet[current_row][6].change_contents("$#{sale.total_amount}")
 
-    temp_file = Tempfile.new(["receipt", ".xlsx"])
-    workbook.write(temp_file.path)
-    xlsx_data = File.read(temp_file.path)
-    temp_file.close
-    temp_file.unlink
-
-    xlsx_data
+    Tempfile.create(["receipt", ".xlsx"]) do |temp_file|
+      workbook.write(temp_file.path)
+      xlsx_data = File.read(temp_file.path)
+      xlsx_data
+    end
   end
 
 

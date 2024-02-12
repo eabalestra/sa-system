@@ -1,0 +1,35 @@
+<%= form_for @transaction, remote: true do |f| %>
+  <div class="form-group">
+    <h4 class="control-label">Datos de la transacción:</h4>
+  </div>
+  <div class="item form-group<%= @transaction.errors[:amount].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :amount, "Monto de la transacción: " %>
+    <div class="input-group">
+      <%= f.number_field :amount, {:class=> "form-control", :placeholder=>"ej: 20000", step: :any} %>
+      <%if @transaction.errors[:amount].any? %>
+        <p class="bg-danger"><%= @transaction.errors[:amount].to_s[/\w([^"]*)/] %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="item form-group<%= @transaction.errors[:description].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :description, "Descripción de la transacción: " %>
+    <div class="input-group">
+      <%= f.text_area :description, {class: "form-control", :placeholder=>"ej: Pago de flete a ... "} %>
+      <%if @transaction.errors[:description].any? %>
+        <p class="bg-danger"><%= @transaction.errors[:description].to_s[/\w([^"]*)/] %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="item form-group<%= @transaction.errors[:transaction_type].any? ? ' has-error has-feedback' : '' %>">
+    <%= f.label :transaction_type, "Tipo: " %>
+    <div class="input-group">
+      <%= collection_select(:transaction, :transaction_type, @transactions_type, :last, :first, {:prompt => 'Seleccione un tipo de transacción'}, { class: "form-control" })%>
+      <%if @transaction.errors[:transaction_type].any? %>
+        <p class="bg-danger"><%= @transaction.errors[:transaction_type].to_s[/\w([^"]*)/] %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="actions col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+    <%= f.submit "Registrar transferencia", class: "btn btn-success", data: { confirm: '¿Estás seguro? Los cambios son irreversibles debido a que se generará una transacción.' } %>
+  </div>
+<% end %>

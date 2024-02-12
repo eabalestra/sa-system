@@ -72,21 +72,7 @@
           <% end %>
         </tbody>
       </table>
-      <nav aria-label="...">
-        <ul class="pagination">
-          <li class="page-item <%= 'disabled' if @products.current_page == 1 %>">
-            <%= link_to 'Atrás', url_for(page: @products.current_page - 1), class: 'page-link' %>
-          </li>
-          <% @products.total_pages.times do |i| %>
-            <li class="page-item <%= 'active' if @products.current_page == i + 1 %>" aria-current="page">
-              <%= link_to i + 1, url_for(page: i + 1), class: 'page-link' %>
-            </li>
-          <% end %>
-          <li class="page-item <%= 'disabled' if @products.current_page == @products.total_pages %>">
-            <%= link_to 'Siguiente', url_for(page: @products.current_page + 1), class: 'page-link' %>
-          </li>
-        </ul>
-      </nav>
+      <%= render partial: 'shared/pagination', locals: { modulo: @products } %>
     </div>
   </div>
 </div>

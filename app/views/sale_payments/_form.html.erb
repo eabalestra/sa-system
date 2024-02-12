@@ -2,12 +2,12 @@
   <div class="item form-group<%= @payment.errors[:amount].any? ? ' has-error has-feedback' : '' %>">
     <%= f.label :amount, "Monto recibido: " %>
     <div class="input-group">
-      <%= f.number_field :amount, {:class=> "form-control", :placeholder=>"Introduzca el monto recibido de pago por la venta..."} %>
+      <%= f.number_field :amount, {class: "form-control", placeholder: "Introduzca el monto recibido de pago por la venta...", step: :any} %>
       <%if @payment.errors[:amount].any? %>
         <p class="bg-danger"><%= @payment.errors[:amount].to_s[/\w([^"]*)/] %></p>
       <% end %>
     </div>
   </div>
-  <%= f.submit "Registrar Cobro", class: "btn btn-primary" %>
+  <%= f.submit "Registrar Cobro", class: "btn btn-primary", data: { confirm: '¿Estás seguro? Los cambios son irreversibles debido a que se generará una transacción.' } %>
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 <% end %>

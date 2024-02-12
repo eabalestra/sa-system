@@ -1,3 +1,5 @@
+require 'libreconv'
+
 class SalesController < ApplicationController
   before_action :set_sale, only: [:show, :edit, :add_item, :destroy, :add_client, :receipt]
 
@@ -56,9 +58,11 @@ class SalesController < ApplicationController
       quantity = params[:quantity].nil? ? 1 : params[:quantity].to_i
     end
 
-    product_amount = product.selling_unit_price * quantity
+    discount = params[:discount].nil? ? 0 : params[:discount].to_f
 
-    @sale_detail = @sale.sale_details.build(product: product, quantity: quantity, price_at_sale: product.selling_unit_price)
+    product_amount = (product.selling_unit_price * quantity) - ((product.selling_unit_price * quantity) * discount)
+
+    @sale_detail = @sale.sale_details.build(product: product, quantity: quantity, price_at_sale: product.selling_unit_price, discount: discount)
 
     amount_before_registration = @sale.total_amount
     amount_after_registration = amount_before_registration + product_amount
@@ -72,6 +76,7 @@ class SalesController < ApplicationController
       price:            product.selling_unit_price.to_f,
       name:             @sale_detail.product.try(:name),
       quantity:         @sale_detail.quantity,
+      discount:         @sale_detail.discount,
       amount_item:      product.selling_unit_price * quantity,
       amount_sale:      amount_after_registration
     }
@@ -111,10 +116,15 @@ class SalesController < ApplicationController
 
   # GET /sales/:id/receipt
   def receipt
-    sale = Sale.find(params[:id])
-    xlsx = Sale.generate_doc(sale)
+    xlsx_content = Sale.generate_doc(@sale)
+    xlsx_path = "/tmp/comprobante-de-venta-#{@sale.id}-descartables-sa.xlsx"
+    File.open(xlsx_path, 'wb') { |f| f.write(xlsx_content) }
 
-    send_data xlsx, filename: "comprobante-de-venta-#{sale.id}-descartables-sa.xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', disposition: 'attachment'
+    pdf_path = "/tmp/comprobante-de-venta-#{@sale.id}-descartables-sa.pdf"
+    Libreconv.convert(xlsx_path, pdf_path)
+
+    pdf = File.read(pdf_path)
+    send_data pdf, filename: "comprobante-de-venta-#{@sale.id}-descartables-sa.pdf", type: 'application/pdf', disposition: 'attachment'
   end
 
   private

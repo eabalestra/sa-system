@@ -29,7 +29,7 @@
               <tr id="pago_<%= payment.id %>">
                 <td> <%= payment.id %> </td>
                 <td> $<%= payment.amount %> </td>
-                <td> <%= payment.created_at %> </td>
+                <td> <%= payment.created_at.in_time_zone('Buenos Aires').strftime('%d/%m/%Y %H:%M') %> </td>
               </tr>
             <% end %>
           <% end %>

@@ -1,0 +1,28 @@
+<% if type.paid? %>
+  <div class="alert alert-success" role="alert">
+    <i class="fas fa-check"></i>
+    <% if type.is_a?(Sale) %>
+      COBRADA
+    <% else %>
+      PAGADA
+    <% end %>
+  </div>
+<% elsif type.partially_paid? %>
+  <div class="alert alert-warning" role="alert">
+    <i class="fas fa-clock"></i>
+    <% if type.is_a?(Sale) %>
+      PARCIALMENTE COBRADA, FALTA: $<%= (type.total_amount.to_d - type.paid_amount().to_d) %>
+    <% else %>
+      PARCIALMENTE PAGADA, FALTA: $<%= (type.total_amount.to_d - type.paid_amount().to_d) %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="alert alert-danger" role="alert">
+    <i class="fas fa-exclamation-triangle"></i>
+    <% if type.is_a?(Sale) %>
+      PENDIENTE DE COBRO
+    <% else %>
+      PENDIENTE DE PAGO
+    <% end %>
+  </div>
+<% end %>

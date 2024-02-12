@@ -37,12 +37,17 @@
             <th>Precio unitario</th>
             <th>Cantidad</th>
             <th>Importe</th>
+            <th>Descuento</th>
+            <th>Importe con descuento</th>
           </tr>
         </thead>
         <tbody>
           <% if @sale_products.empty? %>
             <tr id="no-product-row">
               <td> No hay productos en la venta </td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
             </tr>
@@ -53,6 +58,8 @@
                 <td> <%= det.product.try(:selling_unit_price) %> </td>
                 <td> <%= det.quantity %> </td>
                 <td> $ <%= det.product.try(:selling_unit_price) * det.quantity %> </td>
+                <td> <%= (det.discount.to_f * 100).round(2) %>%</td>
+                <td> $ <%= (det.product.try(:selling_unit_price) * det.quantity) - ((det.product.try(:selling_unit_price) * det.quantity) * det.discount) %> </td>
               </tr>
             <% end %>
           <% end %>

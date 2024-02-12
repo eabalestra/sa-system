@@ -1,0 +1,64 @@
+<%= stylesheet_link_tag 'sales' %>
+<div class="row">
+  <div class="col-12 col-md-6 text-left">
+    <h3 class="h3 mb-2 text-gray-800">Registro de Adquisición de Productos</h3>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buscador_producto">
+        Buscar producto
+      </button>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#buscador_proveedor">
+        Buscar proveedor
+      </button>
+    </div>
+    <div id="proveedor_compra" class="nombre-proveedor">
+      <%= "Proveedor: #{@purchase.supplier.present? ? @purchase.supplier.name : 'Proveedor general'}" %>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 text-right">
+    <h2 id="importe_compra_lbl"> Importe $<%= @purchase.total_amount %> </h2>
+    <div class="btn-group" role="group">
+      <label class="mr-2">
+        <%= link_to 'Finalizar registro de compra', purchases_path, class: "btn btn-success" %>
+      </label>
+      <label>
+        <%= link_to 'Cancelar registro de compra', @purchase, method: :delete, data: { confirm: '¿Cancelar el registro de compra?' }, class: "btn btn-danger" %>
+      </label>
+    </div>
+  </div>
+</div>
+<br />
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="tabla_compras" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>PU de compra</th>
+            <th>Cantidad</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @purchase_products.empty? %>
+            <tr id="no-product-row">
+              <td> No hay productos en la compra </td>
+            </tr>
+          <% else %>
+            <% @purchase_products.each do |det| %>
+              <tr>
+                <td> <%= det.product.try(:name) %> </td>
+                <td> <%= det.product.try(:selling_unit_price) %> </td>
+                <td> <%= det.quantity %> </td>
+                <td> $ <%= det.product.try(:selling_unit_price) * det.quantity %> </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<% @model = @purchase %>
+<%= render 'buscador_producto', model: @model, tipo: "purchases" %>
+<%= render 'buscador_proveedor', purchase: @purchase %>

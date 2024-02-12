@@ -1,0 +1,43 @@
+<form>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="id">ID</label>
+      <input type="text" class="form-control" value="<%= @purchase.id %>" disabled>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="fecha">Fecha</label>
+      <input type="text" class="form-control" value="<%= @purchase.created_at.strftime("%d-%m-%Y") %>" disabled>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="id">Monto de Compra</label>
+      <input type="text" class="form-control" value="$<%= @purchase.total_amount %>" disabled>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="Usuario">Usuario</label>
+      <input type="text" class="form-control" value="<%= @purchase.user.email %>" disabled>
+    </div>
+  </div>
+</form>
+<br>
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Precio de Compra</th>
+      <th>Importe</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @purchase.purchase_details.each do |detalle| %>
+      <tr>
+        <td><%= detalle.product.name %></td>
+        <td><%= detalle.quantity %></td>
+        <td><%= detalle.price_at_purchase %></td>
+        <td><%= detalle.price_at_purchase * detalle.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -60,6 +60,36 @@
           </div>
         </div>
       </li>
+      <%# PURCHASES %>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-store"></i>
+          <span>Compras</span>
+        </a>
+        <div id="collapsePurchases" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <%# <h6 class="collapse-header">Gestión de Compras:</h6> %>
+            <%= link_to purchases_path, class:"collapse-item" do%>
+              Gestión de Compras
+            <% end %>
+          </div>
+        </div>
+      </li>
+      <%# TRANSACTIONS %>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTransactions" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-exchange-alt"></i>
+          <span>Transacciones</span>
+        </a>
+        <div id="collapseTransactions" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <%# <h6 class="collapse-header">Gestión de Transacciones:</h6> %>
+            <%= link_to transactions_path, class:"collapse-item" do%>
+              Gestión de Transacciones
+            <% end %>
+          </div>
+        </div>
+      </li>
       <%# PRODUCTS %>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -239,7 +269,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Ballestra Software</span>
+            <span>SA System v1.0 - Copyright &copy; Ballestra Software</span>
           </div>
         </div>
       </footer>

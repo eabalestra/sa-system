@@ -1,0 +1,72 @@
+<%= stylesheet_link_tag 'transactions' %>
+<h2 class="card-title m-2 font-weight-bold">Transacciones</h2>
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <%= link_to new_transaction_path, { remote: true, class: "btn btn-info float-left", id: "crear-transaction-btn"}  do %>
+        <span class="fas fa-plus-square"> </span>
+        Registrar transacción
+      <%end%>
+    </div>
+    <div class="table-responsive">
+      <table class="table" id="tablaTransactions">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Realizada por</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @transactions.empty? %>
+            <tr>
+              <td> No hay transacciones </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          <% else %>
+            <% @transactions.each do |transaction| %>
+              <tr>
+                <td class="text-body"><strong>#<%= transaction.id %></strong></td>
+                <td><%= transaction.description %></td>
+                <td><%= transaction.user.email %></td>
+                <td><%= transaction.created_at.in_time_zone('Buenos Aires').strftime('%d/%m/%Y %H:%M') %></td>
+                <% if transaction.sale_payment? || transaction.income? %>
+                  <td>+ $<%= transaction.amount %></td>
+                  <td>
+                    <span class="badge badge-pill badge-soft-success font-size-14">
+                      <% if transaction.sale_payment? %>
+                        Cobro de venta
+                      <% else %>
+                        Ingreso de dinero
+                      <% end %>
+                    </span>
+                  </td>
+                <% else %>
+                  <td>- $<%=transaction.amount%></td>
+                  <td>
+                    <span class="badge badge-pill badge-soft-danger font-size-14">
+                      <% if transaction.purchase_payment? %>
+                        Pago de compra a proveedor
+                      <% else %>
+                        Egreso de dinero
+                      <% end %>
+                    </span>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+      <%= render partial: 'shared/pagination', locals: { modulo: @transactions } %>
+    </div>
+  </div>
+</div>
+<%= render 'modal_transactions' %>

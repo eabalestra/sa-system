@@ -1,0 +1,31 @@
+<% new_row = capture do %>
+  <td class="text-body"><strong>#<%= @transaction.id %></strong></td>
+  <td><%= @transaction.description %></td>
+  <td><%= @transaction.user.email %></td>
+  <td><%= @transaction.created_at.in_time_zone('Buenos Aires').strftime('%d/%m/%Y %H:%M') %></td>
+  <% if @transaction.sale_payment? || @transaction.income? %>
+    <td>+ $<%= @transaction.amount %></td>
+    <td>
+      <span class="badge badge-pill badge-soft-success font-size-14">
+        <% if @transaction.sale_payment? %>
+          Cobro de venta
+        <% else %>
+          Ingreso de dinero
+        <% end %>
+      </span>
+    </td>
+  <% else %>
+    <td>- $<%=@transaction.amount%></td>
+    <td>
+      <span class="badge badge-pill badge-soft-danger font-size-14">
+        <% if @transaction.purchase_payment? %>
+          Pago de compra a proveedor
+        <% else %>
+          Egreso de dinero
+        <% end %>
+      </span>
+    </td>
+  <% end %>
+<% end %>
+$('#modalTransactions').modal('toggle');
+$('#tablaTransactions').prepend('<%= j new_row %>');

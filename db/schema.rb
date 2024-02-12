@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_08_114214) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "balances", force: :cascade do |t|
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "clients", force: :cascade do |t|
@@ -67,11 +73,43 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
+  create_table "purchase_details", force: :cascade do |t|
+    t.integer "quantity"
+    t.integer "product_id", null: false
+    t.integer "purchase_id", null: false
+    t.decimal "price_at_purchase"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_purchase_details_on_product_id"
+    t.index ["purchase_id"], name: "index_purchase_details_on_purchase_id"
+  end
+
+  create_table "purchase_payments", force: :cascade do |t|
+    t.integer "purchase_id", null: false
+    t.decimal "amount"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["purchase_id"], name: "index_purchase_payments_on_purchase_id"
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.decimal "total_amount"
+    t.integer "user_id"
+    t.integer "supplier_id"
+    t.integer "payment_status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supplier_id"], name: "index_purchases_on_supplier_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
+  end
+
   create_table "sale_details", force: :cascade do |t|
     t.integer "quantity"
     t.integer "product_id", null: false
     t.integer "sale_id", null: false
     t.decimal "price_at_sale"
+    t.decimal "discount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_sale_details_on_product_id"
@@ -109,6 +147,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.decimal "amount"
+    t.string "description"
+    t.integer "transaction_type"
+    t.integer "sale_payments_id"
+    t.integer "purchase_payments_id"
+    t.integer "user_id", null: false
+    t.integer "balance_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["balance_id"], name: "index_transactions_on_balance_id"
+    t.index ["purchase_payments_id"], name: "index_transactions_on_purchase_payments_id"
+    t.index ["sale_payments_id"], name: "index_transactions_on_sale_payments_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -125,9 +179,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_01_004025) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "products", "suppliers"
+  add_foreign_key "purchase_details", "products"
+  add_foreign_key "purchase_details", "purchases"
+  add_foreign_key "purchase_payments", "purchases"
+  add_foreign_key "purchases", "suppliers"
+  add_foreign_key "purchases", "users"
   add_foreign_key "sale_details", "products"
   add_foreign_key "sale_details", "sales"
   add_foreign_key "sale_payments", "sales"
   add_foreign_key "sales", "clients"
   add_foreign_key "sales", "users"
+  add_foreign_key "transactions", "balances"
+  add_foreign_key "transactions", "purchase_payments", column: "purchase_payments_id"
+  add_foreign_key "transactions", "sale_payments", column: "sale_payments_id"
+  add_foreign_key "transactions", "users"
 end
