@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for sa-system on 2024-02-12T19:23:27-03:00
+# fly.toml app configuration file generated for sa-system on 2024-02-12T20:18:39-03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -10,7 +10,7 @@ console_command = '/rails/bin/rails console'
 [build]
 
 [deploy]
-  release_command = "./bin/rails db:prepare"
+  release_command = './bin/rails db:prepare'
 
 [http_service]
   internal_port = 3000
