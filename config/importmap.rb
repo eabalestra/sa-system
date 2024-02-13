@@ -14,3 +14,5 @@ pin "bootstrap", to: "bootstrap.min.js", preload: true
 
 pin "chartkick", to: "chartkick.js"
 pin "Chart.bundle", to: "Chart.bundle.js"
+
+pin "sb_admin", to: "sb-admin-2.min.js"

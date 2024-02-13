@@ -4,16 +4,13 @@ import "controllers";
 
 import "jquery";
 import "jquery_ujs";
-
 import "popper";
 import "bootstrap";
+import "sb_admin";
 
 import "./jquery.min.js";
 import "./jquery.easing.min.js";
-
 import "./bootstrap.bundle.js";
-
-import "./sb-admin-2.min.js";
 
 import "chartkick";
 import "Chart.bundle";
