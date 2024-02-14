@@ -46,11 +46,20 @@ gem 'bootsnap', require: false
 # Use AWS SDK for Ruby
 gem 'aws-sdk-s3'
 
-#
-gem 'bootstrap', '~> 5.3.2'
-gem 'dartsass-sprockets'
-gem 'font_awesome5_rails'
+# Use jquery as the JavaScript librar
 gem 'jquery-rails'
+
+# Use jquery-ui for pretty UI
+gem 'jquery-ui-rails'
+
+# Use Sass to process CSS
+gem "sassc-rails"
+
+#
+gem "bootstrap"
+
+#
+gem "sassc-rails"
 
 # Use devise for authentication
 gem 'devise'
