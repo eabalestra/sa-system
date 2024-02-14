@@ -58,9 +58,6 @@ gem "sassc-rails"
 #
 gem "bootstrap"
 
-#
-gem "sassc-rails"
-
 # Use devise for authentication
 gem 'devise'
 

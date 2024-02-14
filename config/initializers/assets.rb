@@ -11,8 +11,12 @@ Rails.application.config.assets.version = "1.0"
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
-Rails.application.config.assets.precompile += %w( jquery.min.js jquery_ujs.js jquery-ui.min.js )
+Rails.application.config.assets.precompile += %w( jquery.min.js jquery_ujs.js jquery-ui.min.js jquery.easing.min.js )
 
 Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js )
 
-# Rails.application.config.assets.precompile += %w( sb-admin-2.min.css sales.css transactions.css )
+Rails.application.config.assets.precompile += %w( sb-admin-2.min.js sb-admin-2.min.css )
+
+Rails.application.config.assets.precompile += %w( sales.css transactions.css all.min.css )
+
+Rails.application.config.assets.precompile += %w( bootstrap.bundle.min.js )

@@ -2,13 +2,17 @@
 import { Turbo } from "@hotwired/turbo-rails";
 import "controllers";
 
-import "jquery"
-import "jquery_ujs"
-import "./jquery_ui"
+import "jquery";
+import "jquery_ujs";
+import "./jquery_ui";
 
-import "popper"
-import "bootstrap"
-import "@fortawesome/fontawesome-free"; 
+import "popper";
+import "bootstrap";
+import "bootstrap-bundle";
+
+import "@fortawesome/fontawesome-free";
+
+import "sb-admin-2";
 
 import "chartkick";
 import "Chart.bundle";
