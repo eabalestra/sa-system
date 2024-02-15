@@ -71,6 +71,7 @@ gem 'will_paginate', '~> 4.0'
 gem "chartkick", "~> 5.0"
 gem "groupdate", "~> 6.4"
 
+# Use libreconv for generate pdfs from receipts
 gem 'libreconv'
 
 group :production do
@@ -115,3 +116,5 @@ group :test do
 end
 
 gem "dockerfile-rails", ">= 1.6", :group => :development
+
+gem "ruby-vips", "~> 2.2"

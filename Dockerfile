@@ -24,6 +24,9 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Install LibreOffice
+RUN apt-get update -qq && apt-get install -y libreoffice
+
 # Install Node.js
 ARG NODE_VERSION=20.10.0
 ENV PATH=/usr/local/node/bin:$PATH
