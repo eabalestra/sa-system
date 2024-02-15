@@ -4,7 +4,7 @@ import "controllers";
 
 import "jquery";
 import "jquery_ujs";
-import "./jquery_ui";
+import "jquery-ui";
 
 import "popper";
 import "bootstrap";
