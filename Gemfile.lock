@@ -150,8 +150,6 @@ GEM
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
-    font-awesome-sass (6.5.1)
-      sassc (~> 2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     groupdate (6.4.0)
@@ -374,7 +372,6 @@ DEPENDENCIES
   dockerfile-rails (>= 1.6)
   factory_bot_rails
   faker
-  font-awesome-sass
   groupdate (~> 6.4)
   htmlbeautifier
   importmap-rails
