@@ -285,8 +285,6 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.13.0)
-    ruby-vips (2.2.0)
-      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyXL (3.4.25)
       nokogiri (>= 1.10.8)
@@ -385,7 +383,6 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.1.2)
   rspec-rails (~> 6.1)
-  ruby-vips (~> 2.2)
   rubyXL
   sassc-rails
   selenium-webdriver
