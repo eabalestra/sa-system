@@ -24,9 +24,6 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Install LibreOffice
-RUN apt-get update -qq && apt-get install -y libreoffice
-
 # Install Node.js
 ARG NODE_VERSION=20.10.0
 ENV PATH=/usr/local/node/bin:$PATH
@@ -40,7 +37,7 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential libpq-dev pkg-config
+    apt-get install --no-install-recommends -y build-essential libpq-dev libvips pkg-config
 
 # Build options
 ENV PATH="/usr/local/node/bin:$PATH"
@@ -57,7 +54,6 @@ COPY --link . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Install LibreoOffice for document conversion
 RUN apt-get update -qq && apt-get install -y libreoffice
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
@@ -69,7 +65,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 postgresql-client && \
+    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application

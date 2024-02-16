@@ -77,6 +77,8 @@ gem 'libreconv'
 group :production do
   # Database adapter for PostgreSQL
   gem 'pg'
+  # Ruby wrapper for the ImageMagick and GraphicsMagick image processing libraries
+  gem "ruby-vips", "~> 2.2"
 end
 
 group :development, :test do
