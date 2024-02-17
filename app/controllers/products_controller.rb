@@ -22,14 +22,15 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.create(product_params)
+    @product = Product.new(product_params)
+
     respond_to do |format|
       if @product.save
-        format.json { head :no_content }
-        format.js
+        format.html { redirect_to products_path, notice: "El producto fue creado correctamente." }
+        format.json { render :show, status: :created, location: @product }
       else
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
-        format.js { render :new }
       end
     end
   end

@@ -51,8 +51,8 @@ class SuppliersController < ApplicationController
   def finder
     @results = Supplier.finder(params[:term]).map do |supplier|
       {
-          id: supplier.id,
-          name: supplier.name
+        id: supplier.id,
+        name: supplier.name
       }
     end
 
