@@ -46,4 +46,6 @@ Rails.application.routes.draw do
   post '/add_supplier_purchase', to: 'purchases#add_supplier'
 
   post '/search', to: 'search#results'
+  get '/search', to: 'home#index'
+
 end
