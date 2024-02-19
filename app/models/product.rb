@@ -37,7 +37,7 @@ class Product < ApplicationRecord
   end
 
   def self.finder(term)
-    Product.where('name LIKE ?', "%#{term}%")
+    Product.where('lower(name) LIKE ?', "%#{term.downcase}%")
   end
 
   def calculate_selling_unit_price
