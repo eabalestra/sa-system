@@ -14,7 +14,7 @@ env:
 jobs:
   test:
     name: Test
-    environment: blogstrap
+    environment: sa-system
     runs-on: ubuntu-latest
 
     services:

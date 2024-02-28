@@ -1,4 +1,4 @@
-# README
+# SA-System ![Tests](https://github.com/eabalestra/sa-system/actions/workflows/ruby.yml/badge.svg)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
