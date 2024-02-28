@@ -26,6 +26,7 @@ class Sale < ApplicationRecord
     if not self.sale_payments.empty?
       self.total_amount - self.paid_amount()
     end
+    self.total_amount
   end
 
   def update_paid_status

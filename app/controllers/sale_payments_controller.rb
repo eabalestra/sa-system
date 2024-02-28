@@ -12,6 +12,7 @@ class SalePaymentsController < ApplicationController
   def create
     @payment = @sale.sale_payments.new(payment_params)
     @payment.date = Date.today
+    @payment.user_id = current_user.id
 
     respond_to do |format|
       if @payment.save

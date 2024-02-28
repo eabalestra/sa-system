@@ -1,6 +1,8 @@
 class PurchasePayment < ApplicationRecord
   belongs_to :purchase
-  has_one :purchase_transaction, class_name: 'Transaction'
+  belongs_to :user
+
+  has_many :transactions, foreign_key: :sale_payments_id
 
   # Validations
   validates :amount, presence: true, numericality: { greater_than: 0 }
@@ -24,7 +26,7 @@ class PurchasePayment < ApplicationRecord
       } por compra ##{self.purchase.id}",
       transaction_type: :purchase_payment,
       purchase_payment: self,
-      user: self.purchase.user,
+      user: self.user,
     )
 
     if transaction.valid?

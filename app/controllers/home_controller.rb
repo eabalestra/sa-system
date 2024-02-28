@@ -10,9 +10,11 @@ class HomeController < ApplicationController
     @annual_earnings = SalePayment.joins(:sale).where(sales: { created_at: annual_range }).sum(:amount)
     @annual_costs = PurchasePayment.joins(:purchase).where(purchases: { created_at: annual_range }).sum(:amount)
 
-    @money_outstanding = Sale.unpaid.sum(:total_amount) + Sale.partially_paid.sum(:total_amount) - Sale.partially_paid.joins(:sale_payments).sum('sale_payments.amount')
-    @money_outstading_to_pay = Purchase.unpaid.sum(:total_amount) + Purchase.partially_paid.sum(:total_amount) - Purchase.partially_paid.joins(:purchase_payments).sum('purchase_payments.amount')
+    @money_outstanding = Sale.unpaid.sum(:total_amount) + Sale.partially_paid.sum(:total_amount) - Sale.partially_paid.joins(:sale_payments).sum("sale_payments.amount")
+    @money_outstading_to_pay = Purchase.unpaid.sum(:total_amount) + Purchase.partially_paid.sum(:total_amount) - Purchase.partially_paid.joins(:purchase_payments).sum("purchase_payments.amount")
 
     @balance = Balance.last || Balance.new(amount: 0)
+
+    @users = User.where(role: 1)
   end
 end

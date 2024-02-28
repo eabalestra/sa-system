@@ -13,6 +13,7 @@
         <thead>
           <tr>
             <th>ID</th>
+            <th>Realizado por</th>
             <th>Monto</th>
             <th>Fecha</th>
           </tr>
@@ -23,11 +24,13 @@
               <td> No hay pagos registrados </td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
           <% else %>
             <% @purchase.purchase_payments.each do |payment| %>
               <tr id="pago_<%= payment.id %>">
                 <td> <%= payment.id %> </td>
+                <td> <%= payment.user.email %> </td>
                 <td> $<%= payment.amount %> </td>
                 <td> <%= payment.created_at.in_time_zone('Buenos Aires').strftime('%d/%m/%Y %H:%M') %> </td>
               </tr>
