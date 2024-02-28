@@ -38,9 +38,6 @@
 /coverage
 
 #
-fly.toml
-
-#
 /vendor/*
 
 #
