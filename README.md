@@ -1,4 +1,4 @@
-# SA-System ![Tests](https://github.com/eabalestra/sa-system/actions/workflows/ruby.yml/badge.svg)
+# SA-System ![Tests](https://github.com/eabalestra/sa-system/actions/workflows/ruby.yml/badge.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/1ce3c57eebfa6743a741/maintainability)](https://codeclimate.com/github/eabalestra/sa-system/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/1ce3c57eebfa6743a741/test_coverage)](https://codeclimate.com/github/eabalestra/sa-system/test_coverage)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
