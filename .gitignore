@@ -45,3 +45,10 @@ fly.toml
 
 #
 TODO.txt
+
+#
+.idea
+.vscode
+
+#
+/sorbet/

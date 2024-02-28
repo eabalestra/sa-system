@@ -7,6 +7,10 @@ class Purchase < ApplicationRecord
 
   enum payment_status: { unpaid: 0, partially_paid: 1, paid: 2 }
 
+  validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0}
+  validates :user_id, presence: true
+  validates :payment_status, presence: true
+
   def paid_amount()
     if not self.purchase_payments.empty?
       return self.purchase_payments.sum(:amount)
@@ -17,6 +21,7 @@ class Purchase < ApplicationRecord
     if not self.purchase_payments.empty?
       self.total_amount - self.paid_amount()
     end
+    self.total_amount
   end
 
   def update_paid_status

@@ -1,6 +1,8 @@
 class SalePayment < ApplicationRecord
   belongs_to :sale
-  has_one :payment_transaction, class_name: 'Transaction'
+  belongs_to :user
+
+  has_many :transactions, foreign_key: :sale_payments_id
 
   # Validations
   validates :amount, presence: true, numericality: { greater_than: 0 }
@@ -24,7 +26,7 @@ class SalePayment < ApplicationRecord
       } por venta ##{self.sale.id}",
       transaction_type: :sale_payment,
       sale_payment: self,
-      user: self.sale.user,
+      user: self.user,
     )
 
     if transaction.valid?
@@ -42,7 +44,7 @@ class SalePayment < ApplicationRecord
       if amount > sale.total_amount
         errors.add(:amount, "El monto ingresado no puede ser mayor al monto total de la venta.")
       end
-      if amount > sale.pending_amount
+      if amount > sale.pending_amount()
         errors.add(:amount, "El monto ingresado no puede ser mayor al monto pendiente de la venta.")
       end
     end

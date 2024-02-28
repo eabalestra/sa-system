@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_08_114214) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_28_184924) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -90,7 +90,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_114214) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["purchase_id"], name: "index_purchase_payments_on_purchase_id"
+    t.index ["user_id"], name: "index_purchase_payments_on_user_id"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -122,7 +124,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_114214) do
     t.datetime "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["sale_id"], name: "index_sale_payments_on_sale_id"
+    t.index ["user_id"], name: "index_sale_payments_on_user_id"
   end
 
   create_table "sales", force: :cascade do |t|
@@ -172,6 +176,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_114214) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "actual_balance", default: "0.0"
+    t.integer "role"
+    t.index ["actual_balance"], name: "index_users_on_actual_balance"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -182,11 +189,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_114214) do
   add_foreign_key "purchase_details", "products"
   add_foreign_key "purchase_details", "purchases"
   add_foreign_key "purchase_payments", "purchases"
+  add_foreign_key "purchase_payments", "users"
   add_foreign_key "purchases", "suppliers"
   add_foreign_key "purchases", "users"
   add_foreign_key "sale_details", "products"
   add_foreign_key "sale_details", "sales"
   add_foreign_key "sale_payments", "sales"
+  add_foreign_key "sale_payments", "users"
   add_foreign_key "sales", "clients"
   add_foreign_key "sales", "users"
   add_foreign_key "transactions", "balances"
