@@ -2,7 +2,7 @@ class ClientsController < ApplicationController
   before_action :set_client, only: [:edit, :update, :destroy]
 
   def index
-    @clients = Client.all
+    @clients = Client.order(name: :asc).paginate(page: params[:page], per_page: 10)
   end
 
   def new

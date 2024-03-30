@@ -29,21 +29,15 @@ Rails.application.routes.draw do
     resources :sale_payments, controller: 'sale_payments'
   end
 
-  resources :purchases, except: %i[show, update] do
-    resources :purchase_payments, controller: 'purchase_payments'
-  end
-
   resources :transactions, except: %i[show, update]
 
   get 'product_finder/:term', to: 'products#finder'
   post '/add_item_sale', to: 'sales#add_item'
-  post '/add_item_purchase', to: 'purchases#add_item'
 
   get 'client_finder/:term', to: 'clients#finder'
   post '/add_client_sale', to: 'sales#add_client'
 
   get 'supplier_finder/:term', to: 'suppliers#finder'
-  post '/add_supplier_purchase', to: 'purchases#add_supplier'
 
   post '/search', to: 'search#results'
   get '/search', to: 'home#index'
