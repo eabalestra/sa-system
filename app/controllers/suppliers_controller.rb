@@ -2,7 +2,7 @@ class SuppliersController < ApplicationController
   before_action :set_supplier, only: [:edit, :update, :destroy]
 
   def index
-    @proveedores = Supplier.all
+    @proveedores = Supplier.order(name: :asc).paginate(page: params[:page], per_page: 10)
   end
 
   # GET /suppliers/new
